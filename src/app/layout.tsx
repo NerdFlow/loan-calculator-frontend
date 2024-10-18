@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Montserrat, Raleway } from "next/font/google";
 import Navbar from "@/app/components/Header/Navbar";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const raleway = Raleway({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-raleway",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
+      <body
+        className={`${montserrat.variable} ${raleway.variable}`}
+        suppressHydrationWarning={true}
+      >
         <Navbar />
         {children}
       </body>

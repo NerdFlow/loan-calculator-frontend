@@ -13,6 +13,10 @@ const config: Config = {
         foreground: "var(--foreground)",
         primary: "#020202",
       },
+      fontFamily: {
+        montserrat: ["var(--font-montserrat)", "sans-serif"],
+        raleway: ["var(--font-raleway)", "sans-serif"],
+      },
     },
   },
   plugins: [],
