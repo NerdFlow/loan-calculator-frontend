@@ -1,6 +1,6 @@
 export default function Login() {
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+    <div className="flex justify-center mt-[65px]">
       <div className="w-[410px] h-[376px] p-6 bg-white rounded-[10px] border border-[#e1e1e1] flex-col justify-start items-center gap-6 inline-flex">
         <div className="w-[362px] h-[84px] flex-col justify-center items-start gap-3 flex">
           <div className="text-black text-[26px] font-bold font-montserrat leading-tight">
