@@ -8,19 +8,17 @@ import plusicon from "../../../assets/images/icon-plus.png";
 import trashicon from "../../../assets/images/icon-trash.png";
 
 interface Row {
-  id: number; 
+  id: number;
 }
 
 export default function ISOInterface() {
-  
-  const [rows, setRows] = useState<Row[]>([{ id: Date.now() }]);  
+  const [rows, setRows] = useState<Row[]>([{ id: Date.now() }]);
   const addRow = () => {
-    setRows([...rows, { id: Date.now() }]); 
+    setRows([...rows, { id: Date.now() }]);
   };
 
-  
-  const deleteRow = (id: number) => { 
-    setRows(rows.filter((row) => row.id !== id)); 
+  const deleteRow = (id: number) => {
+    setRows(rows.filter((row) => row.id !== id));
   };
 
   return (
@@ -51,106 +49,173 @@ export default function ISOInterface() {
 
       {/* Grid with border around the whole section */}
       <div className="mt-8 p-4 border border-gray-300 bg-white rounded-lg">
-        {/* Grid for 8 columns and dynamic rows */}
-        <div className="grid grid-cols-8 gap-4">
-          {/* Column Names - First Row */}
-          <div className="font-semibold text-neutral-700">Loan Amount</div>
-          <div className="font-semibold text-neutral-700">Payment Frequency</div>
-          <div className="font-semibold text-neutral-700">Commission</div>
-          <div className="font-semibold text-neutral-700">Origination Fee</div>
-          <div className="font-semibold text-neutral-700">Factor</div>
-          <div className="font-semibold text-neutral-700">Buy Rate</div>
-          <div className="font-semibold text-neutral-700">Payment</div>
-          <div className="font-semibold text-neutral-700">Actions</div>
+        <table className="w-full border-collapse">
+          {/* Table Header */}
+          <thead>
+            <tr className="text-left bg-white">
+              <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                Loan Amount
+              </th>
+              <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                Payment Frequency
+              </th>
+              <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                Commission
+              </th>
+              <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                Origination Fee
+              </th>
+              <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                Factor
+              </th>
+              <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                Buy Rate
+              </th>
+              <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                Payment
+              </th>
+              <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                Actions
+              </th>
+            </tr>
+          </thead>
 
-        
-          {rows.map((row) => (
-            <React.Fragment key={row.id}>
-              {/* Input Fields - Second Row */}
-              <div className="flex gap-2.5 items-center pr-2 pl-3 mt-1 w-full font-medium tracking-tight bg-white rounded-md border border-solid border-neutral-200 min-h-[44px] text-neutral-700">
-                <input
-                  type="text"
-                  placeholder="$50,000"
-                  className="flex-1 placeholder-black w-20 focus:outline-none"
-                />
-                <Image src={dollaricon} alt="dollar-icon" className="w-6 h-6" />
-              </div>
+          {/* Table Body */}
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.id}>
+                {/* Loan Amount */}
+                <td className="py-2 px-3 border-b">
+                  <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
+                    <input
+                      type="text"
+                      placeholder="$50,000"
+                      className="flex-1 placeholder-black w-20 font-raleway focus:outline-none"
+                    />
+                    <Image
+                      src={dollaricon}
+                      alt="dollar-icon"
+                      className="w-6 h-6"
+                    />
+                  </div>
+                </td>
 
-              <div className="flex gap-2.5 items-center pr-2 pl-3 mt-1 w-full font-medium tracking-tight bg-white rounded-md border border-solid border-neutral-200 min-h-[44px] text-neutral-700">
-                <select className="w-full border-none outline-none">
-                  <option value="weekly">-Select-</option>
-                  <option value="biweekly">Bi-Weekly</option>
-                  <option value="monthly">Monthly</option>
-                </select>
-              </div>
+                {/* Payment Frequency */}
+                <td className="py-2 px-3 border-b">
+                  <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium font-raleway  tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
+                    <select className="w-full border-none outline-none">
+                      <option value="weekly">-Select-</option>
+                      <option value="biweekly">Bi-Weekly</option>
+                      <option value="monthly">Monthly</option>
+                    </select>
+                  </div>
+                </td>
 
-              <div className="flex gap-2.5 items-center pr-2 pl-3 mt-1 w-full font-medium tracking-tight bg-white rounded-md border border-solid border-neutral-200 min-h-[44px] text-neutral-700">
-                <input
-                  type="text"
-                  placeholder="2.5"
-                  className="flex-1 placeholder-black w-20 focus:outline-none"
-                />
-                <Image src={percenticon} alt="percent-icon" className="w-6 h-6" />
-              </div>
+                {/* Commission */}
+                <td className="py-2 px-3 border-b">
+                  <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
+                    <input
+                      type="text"
+                      placeholder="2.5"
+                      className="flex-1 placeholder-black font-raleway  w-20 focus:outline-none"
+                    />
+                    <Image
+                      src={percenticon}
+                      alt="percent-icon"
+                      className="w-6 h-6"
+                    />
+                  </div>
+                </td>
 
-              <div className="flex gap-2.5 items-center pr-2 pl-3 mt-1 w-full font-medium tracking-tight bg-white rounded-md border border-solid border-neutral-200 min-h-[44px] text-neutral-700">
-                <input
-                  type="text"
-                  placeholder="$50,000"
-                  className="flex-1 placeholder-black w-20 focus:outline-none"
-                />
-                <Image src={dollaricon} alt="dollar-icon" className="w-6 h-6" />
-              </div>
+                {/* Origination Fee */}
+                <td className="py-2 px-3 border-b">
+                  <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
+                    <input
+                      type="text"
+                      placeholder="$50,000"
+                      className="flex-1 placeholder-black font-raleway  w-20 focus:outline-none"
+                    />
+                    <Image
+                      src={dollaricon}
+                      alt="dollar-icon"
+                      className="w-6 h-6"
+                    />
+                  </div>
+                </td>
 
-              <div className="flex gap-2.5 items-center pr-2 pl-3 mt-1 w-full font-medium tracking-tight bg-white rounded-md border border-solid border-neutral-200 min-h-[44px] text-neutral-700">
-                <input
-                  type="text"
-                  placeholder="1.2"
-                  className="flex-1 placeholder-black w-20 focus:outline-none"
-                />
-              </div>
+                {/* Factor */}
+                <td className="py-2 px-3 border-b">
+                  <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
+                    <input
+                      type="text"
+                      placeholder="1.2"
+                      className="flex-1 placeholder-black font-raleway  w-20 focus:outline-none"
+                    />
+                  </div>
+                </td>
 
-              <div className="flex gap-2.5 items-center pr-2 pl-3 mt-1 w-full font-medium tracking-tight bg-white rounded-md border border-solid border-neutral-200 min-h-[44px] text-neutral-700">
-                <input
-                  type="text"
-                  placeholder="$50,000"
-                  className="flex-1 placeholder-black w-20 focus:outline-none"
-                />
-                <Image src={dollaricon} alt="dollar-icon" className="w-6 h-6" />
-              </div>
+                {/* Buy Rate */}
+                <td className="py-2 px-3 border-b">
+                  <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
+                    <input
+                      type="text"
+                      placeholder="$50,000"
+                      className="flex-1 placeholder-black font-raleway  w-20 focus:outline-none"
+                    />
+                    <Image
+                      src={dollaricon}
+                      alt="dollar-icon"
+                      className="w-6 h-6"
+                    />
+                  </div>
+                </td>
 
-              <div className="flex gap-2.5 items-center pr-2 pl-3 mt-1 w-full font-medium tracking-tight bg-white rounded-md border border-solid border-neutral-200 min-h-[44px] text-neutral-700">
-                <input
-                  type="text"
-                  placeholder="$50,000"
-                  className="flex-1 placeholder-black w-20 focus:outline-none"
-                />
-                <Image src={dollaricon} alt="dollar-icon" className="w-6 h-6" />
-              </div>
+                {/* Payment */}
+                <td className="py-2 px-3 border-b">
+                  <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
+                    <input
+                      type="text"
+                      placeholder="$50,000"
+                      className="flex-1 placeholder-black font-raleway w-20 focus:outline-none"
+                    />
+                    <Image
+                      src={dollaricon}
+                      alt="dollar-icon"
+                      className="w-6 h-6"
+                    />
+                  </div>
+                </td>
 
-              <div className="flex gap-2.5 items-center pr-2 pl-3 mt-1 w-full font-medium tracking-tight min-h-[44px] text-neutral-700 ">
-                <Image
-                  src={trashicon}
-                  alt="trash-icon"
-                  className="w-6 h-6 cursor-pointer"
-                  onClick={() => deleteRow(row.id)} 
-                />
-              </div>
-            </React.Fragment>
-          ))}
+                {/* Actions */}
+                <td className="py-2 px-3 border-b">
+                  <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight min-h-[44px] text-neutral-700">
+                    <Image
+                      src={trashicon}
+                      alt="trash-icon"
+                      className="w-6 h-6 cursor-pointer"
+                      onClick={() => deleteRow(row.id)}
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
 
-          {/* Button - Third Row */}
-          <div className="col-span-8 flex justify-start mt-4">
-            <button
-              className="text-black px-4 py-2 rounded-md border border-neutral-200 flex items-center gap-2"
-              onClick={addRow}
-            >
-              {/* Plus icon */}
-              <Image src={plusicon} alt="plus-icon" className="w-6 h-6" />
-              Add Another Row
-            </button>
-          </div>
-        </div>
+          {/* Button to Add Row */}
+          <tfoot>
+            <tr>
+              <td colSpan={8} className="py-4">
+                <button
+                  className="text-black font-montserrat font-semibold px-4 py-2 rounded-md border border-neutral-200 flex items-center gap-2"
+                  onClick={addRow}
+                >
+                  <Image src={plusicon} alt="plus-icon" className="w-6 h-6" />
+                  Add Another Row
+                </button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
 
       <div className="flex flex-row justify-between items-center mt-8 p-4 border border-gray-300 bg-white rounded-lg">
@@ -163,7 +228,7 @@ export default function ISOInterface() {
           </p>
         </div>
         <div className="flex-1 flex justify-end">
-          <button className="flex justify-center items-center px-6 py-3 rounded-full bg-blue-600 text-white font-raleway">
+          <button className="flex justify-center font-semibold items-center px-6 py-3 rounded-full bg-[#2E6FAC] text-white font-montserrat">
             Save and Generate Link
           </button>
         </div>
