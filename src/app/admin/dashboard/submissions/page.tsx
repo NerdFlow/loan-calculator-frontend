@@ -1,12 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import trashIcon from "@/app/assets/icons/icon-trash-outline.png";
 import documentIcon from "@/app/assets/icons/icon-document-text-outline.png";
 import backIcon from "@/app/assets/icons/icon-chevron-left-solid.png";
+import ShowSubmissionModal from "./components/modal/ShowSubmissionModal";
 
 export default function Submission() {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
   // initiliazing the navigation hook
   const router = useRouter();
 
@@ -58,6 +65,8 @@ export default function Submission() {
           </h1>
         </div>
       </header>
+
+      {isOpen && <ShowSubmissionModal />}
 
       <div className="mt-8 py-4 border border-gray-300 bg-white rounded-lg">
         <table className="w-full border-collapse">
