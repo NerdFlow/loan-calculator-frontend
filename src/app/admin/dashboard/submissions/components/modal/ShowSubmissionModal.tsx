@@ -1,6 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import trashIcon from "@/app/assets/icons/icon-trash-outline.png";
+import fileIcon from "@/app/assets/icons/icon-file-type.png";
+import downloadIcon from "@/app/assets/icons/icon-download.png";
+import xIcon from "@/app/assets/icons/icon-x-mark-large-solid.png";
 
 const ShowSubmissionModal = () => {
   return (
@@ -15,6 +18,13 @@ const ShowSubmissionModal = () => {
               Private Limited
             </div>
           </div>
+          <Image
+            src={xIcon}
+            className="cursor-pointer"
+            width={18}
+            height={18}
+            alt="close icon"
+          />
         </div>
         <div className="self-stretch justify-start items-start gap-6 inline-flex">
           <div className="grow shrink basis-0 h-[43px] justify-start items-start gap-6 flex">
@@ -95,7 +105,13 @@ const ShowSubmissionModal = () => {
                 Action
               </div>
               <div className="w-6 h-6 relative" />
-              <Image src={trashIcon} width={24} height={24} alt="trash icon" />
+              <Image
+                src={trashIcon}
+                className="cursor-pointer"
+                width={24}
+                height={24}
+                alt="trash icon"
+              />
             </div>
           </div>
         </div>
@@ -107,13 +123,26 @@ const ShowSubmissionModal = () => {
                   Driver’s License
                 </div>
                 <div className="self-stretch h-9 px-3 py-1.5 bg-white rounded-md border border-[#efefef] justify-center items-center gap-2.5 inline-flex">
-                  <div className="w-[18px] h-[18px] relative" />
+                  <Image
+                    src={fileIcon}
+                    width={18}
+                    height={18}
+                    alt="file icon"
+                  />
+                  <div className="h-[18px] relative" />
                   <div className="grow shrink basis-0 h-6 justify-start items-center gap-0.5 flex">
                     <div className="text-[#394560] text-xs font-normal font-['Inter'] leading-normal">
                       Driver’s License.pdf
                     </div>
                   </div>
-                  <div className="w-3.5 h-3.5 relative" />
+                  <div className="h-3.5 relative" />
+                  <Image
+                    src={downloadIcon}
+                    className="cursor-pointer"
+                    width={14}
+                    height={14}
+                    alt="download icon"
+                  />
                 </div>
               </div>
               <div className="self-stretch h-[68px] flex-col justify-start items-start gap-3 flex">
@@ -121,13 +150,26 @@ const ShowSubmissionModal = () => {
                   Proof of ownership
                 </div>
                 <div className="self-stretch h-9 px-3 py-1.5 bg-white rounded-md border border-[#efefef] justify-center items-center gap-2.5 inline-flex">
-                  <div className="w-[18px] h-[18px] relative" />
+                  <Image
+                    src={fileIcon}
+                    width={18}
+                    height={18}
+                    alt="file icon"
+                  />
+                  <div className="h-[18px] relative" />
                   <div className="grow shrink basis-0 h-6 justify-start items-center gap-0.5 flex">
                     <div className="text-[#394560] text-xs font-normal font-['Inter'] leading-normal">
                       Proof of ownership.pdf
                     </div>
                   </div>
-                  <div className="w-3.5 h-3.5 relative" />
+                  <div className="h-3.5 relative" />
+                  <Image
+                    src={downloadIcon}
+                    className="cursor-pointer"
+                    width={14}
+                    height={14}
+                    alt="download icon"
+                  />
                 </div>
               </div>
             </div>
@@ -137,13 +179,26 @@ const ShowSubmissionModal = () => {
                   Voided Check
                 </div>
                 <div className="self-stretch h-9 px-3 py-1.5 bg-white rounded-md border border-[#efefef] justify-center items-center gap-2.5 inline-flex">
-                  <div className="w-[18px] h-[18px] relative" />
+                  <Image
+                    src={fileIcon}
+                    width={18}
+                    height={18}
+                    alt="file icon"
+                  />
+                  <div className="h-[18px] relative" />
                   <div className="grow shrink basis-0 h-6 justify-start items-center gap-0.5 flex">
                     <div className="text-[#394560] text-xs font-normal font-['Inter'] leading-normal">
                       Voided Check.pdf
                     </div>
                   </div>
-                  <div className="w-3.5 h-3.5 relative" />
+                  <div className="h-3.5 relative" />
+                  <Image
+                    src={downloadIcon}
+                    className="cursor-pointer"
+                    width={14}
+                    height={14}
+                    alt="download icon"
+                  />
                 </div>
               </div>
               <div className="self-stretch h-[68px] flex-col justify-start items-start gap-3 flex">
@@ -151,13 +206,26 @@ const ShowSubmissionModal = () => {
                   A/R or Credit Card Processing Statement
                 </div>
                 <div className="self-stretch h-9 px-3 py-1.5 bg-white rounded-md border border-[#efefef] justify-center items-center gap-2.5 inline-flex">
-                  <div className="w-[18px] h-[18px] relative" />
+                  <Image
+                    src={fileIcon}
+                    width={18}
+                    height={18}
+                    alt="file icon"
+                  />
+                  <div className="h-[18px] relative" />
                   <div className="grow shrink basis-0 h-6 justify-start items-center gap-0.5 flex">
                     <div className="text-[#394560] text-xs font-normal font-['Inter'] leading-normal">
                       A/R or Credit Card Processing Statement.pdf
                     </div>
                   </div>
-                  <div className="w-3.5 h-3.5 relative" />
+                  <div className="h-3.5 relative" />
+                  <Image
+                    src={downloadIcon}
+                    className="cursor-pointer"
+                    width={14}
+                    height={14}
+                    alt="download icon"
+                  />
                 </div>
               </div>
             </div>
