@@ -12,7 +12,7 @@ export default function Dashboard() {
           description="Login provides secure access to personalized accounts by verifying
               user credentials"
           badgeCount={12}
-          route="/admin/dashboard/iso-interface"
+          route="/admin/dashboard/submissions"
         />
 
         <MenuCard
