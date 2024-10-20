@@ -78,28 +78,28 @@ export default function Submission() {
             {/* Table Header */}
             <thead className="border-b border-gray-300">
               <tr className="text-left bg-white">
-                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Customer Name
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Loan Amount
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Time(Months)
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Commission
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Origination Fee
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Factor
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Payment
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Actions
                 </th>
               </tr>

@@ -57,34 +57,34 @@ export default function ISOInterface() {
       </header>
 
       {/* Grid with border around the whole section */}
-      <div className="mt-8 p-4 border border-gray-300 bg-white rounded-lg">
+      <div className="mt-8 py-4 border border-gray-300 bg-white rounded-lg">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             {/* Table Header */}
-            <thead>
+            <thead className="border-b border-gray-300">
               <tr className="text-left bg-white">
-                <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                <th className="font-semibold font-montserrat text-neutral-700 p-3">
                   Loan Amount
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Payment Frequency
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Commission
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Origination Fee
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Factor
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Buy Rate
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Payment
                 </th>
-                <th className="font-semibold font-montserrat text-neutral-700 py-2 border-b">
+                <th className="font-semibold font-montserrat text-neutral-700 py-2">
                   Actions
                 </th>
               </tr>
@@ -214,7 +214,7 @@ export default function ISOInterface() {
             {/* Button to Add Row */}
             <tfoot>
               <tr>
-                <td colSpan={8} className="py-4">
+                <td colSpan={8} className="p-3">
                   <button
                     className="text-black font-montserrat font-semibold px-4 py-2 rounded-md border border-neutral-200 flex items-center gap-2"
                     onClick={addRow}
