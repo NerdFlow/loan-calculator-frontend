@@ -4,8 +4,22 @@ import trashIcon from "@/app/assets/icons/icon-trash-outline.png";
 import fileIcon from "@/app/assets/icons/icon-file-type.png";
 import downloadIcon from "@/app/assets/icons/icon-download.png";
 import xIcon from "@/app/assets/icons/icon-x-mark-large-solid.png";
+import { Submission } from "@/app/interfaces/Submission/Submission.interface";
 
-const ShowSubmissionModal = () => {
+interface ShowSubmissionProps {
+  isModelOpen: boolean;
+  onClose: () => void;
+  submission: Submission;
+}
+
+const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
+  isModelOpen,
+  onClose,
+  submission,
+}) => {
+  // checking if modal is not open then we don't render it
+  if (!isModelOpen) return;
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="w-[836px] h-[456px] p-6 bg-white rounded-lg shadow flex-col justify-start items-start gap-6 inline-flex">
@@ -15,7 +29,7 @@ const ShowSubmissionModal = () => {
               Customer:
             </div>
             <div className="text-[#2e6fac] text-2xl font-semibold  font-montserrat">
-              Private Limited
+              {submission.customerName}
             </div>
           </div>
           <Image
@@ -24,6 +38,7 @@ const ShowSubmissionModal = () => {
             width={18}
             height={18}
             alt="close icon"
+            onClick={onClose}
           />
         </div>
         <div className="self-stretch justify-start items-start gap-6 inline-flex">
@@ -33,7 +48,7 @@ const ShowSubmissionModal = () => {
                 Loan Amount
               </div>
               <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
-                $50,000
+                {submission.loanAmount}
               </div>
             </div>
             <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
@@ -42,7 +57,7 @@ const ShowSubmissionModal = () => {
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  10
+                  {submission.timeMonths}
                 </div>
               </div>
             </div>
@@ -54,7 +69,7 @@ const ShowSubmissionModal = () => {
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  10%
+                  {submission.commission}
                 </div>
               </div>
             </div>
@@ -63,7 +78,7 @@ const ShowSubmissionModal = () => {
                 Origination Fees
               </div>
               <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
-                2.5%
+                {submission.originationFee}
               </div>
             </div>
           </div>
@@ -75,7 +90,7 @@ const ShowSubmissionModal = () => {
                 Factor
               </div>
               <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
-                1.2
+                {submission.factor}
               </div>
             </div>
             <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
@@ -84,7 +99,7 @@ const ShowSubmissionModal = () => {
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  $50,000
+                  {submission.payment}
                 </div>
               </div>
             </div>

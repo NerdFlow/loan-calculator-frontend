@@ -7,12 +7,18 @@ import trashIcon from "@/app/assets/icons/icon-trash-outline.png";
 import documentIcon from "@/app/assets/icons/icon-document-text-outline.png";
 import backIcon from "@/app/assets/icons/icon-chevron-left-solid.png";
 import ShowSubmissionModal from "./components/modal/ShowSubmissionModal";
+import { Submission as SubmissionInterface } from "@/app/interfaces/Submission/Submission.interface";
 
 export default function Submission() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [submissionData, setSubmissionData] = useState<SubmissionInterface>();
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleSubmissionView = (row: SubmissionInterface) => {
+    setSubmissionData(row);
+    setIsModalOpen(true);
+  };
 
   // initiliazing the navigation hook
   const router = useRouter();
@@ -20,7 +26,7 @@ export default function Submission() {
   const rows = [
     {
       id: 1,
-      customerName: "Private limited",
+      customerName: "Private Sam",
       loanAmount: "$50,000",
       timeMonths: "12",
       commission: "2.5",
@@ -30,7 +36,7 @@ export default function Submission() {
     },
     {
       id: 2,
-      customerName: "Private limited",
+      customerName: "Private Ben",
       loanAmount: "$50,000",
       timeMonths: "12",
       commission: "2.5",
@@ -40,7 +46,7 @@ export default function Submission() {
     },
     {
       id: 3,
-      customerName: "Private limited",
+      customerName: "Private He",
       loanAmount: "$50,000",
       timeMonths: "12",
       commission: "2.5",
@@ -65,8 +71,6 @@ export default function Submission() {
           </h1>
         </div>
       </header>
-
-      {isOpen && <ShowSubmissionModal />}
 
       <div className="mt-8 py-4 border border-gray-300 bg-white rounded-lg">
         <table className="w-full border-collapse">
@@ -161,6 +165,7 @@ export default function Submission() {
                         src={documentIcon}
                         alt="Delete"
                         className="w-5 h-5 cursor-pointer"
+                        onClick={() => handleSubmissionView(row)}
                       />
                     </button>
                     <button>
@@ -183,6 +188,15 @@ export default function Submission() {
             ))}
           </tbody>
         </table>
+
+        {/* checking if modal is open and submission view data is set */}
+        {isModalOpen && submissionData && (
+          <ShowSubmissionModal
+            isModelOpen={isModalOpen}
+            onClose={closeModal}
+            submission={submissionData}
+          />
+        )}
       </div>
     </div>
   );
