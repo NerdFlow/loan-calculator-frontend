@@ -73,121 +73,123 @@ export default function Submission() {
       </header>
 
       <div className="mt-8 py-4 border border-gray-300 bg-white rounded-lg">
-        <table className="w-full border-collapse">
-          {/* Table Header */}
-          <thead className="border-b border-gray-300">
-            <tr className="text-left bg-white">
-              <th className="font-semibold font-montserrat text-neutral-700 p-3">
-                Customer Name
-              </th>
-              <th className="font-semibold font-montserrat text-neutral-700 p-3">
-                Loan Amount
-              </th>
-              <th className="font-semibold font-montserrat text-neutral-700 p-3">
-                Time(Months)
-              </th>
-              <th className="font-semibold font-montserrat text-neutral-700 p-3">
-                Commission
-              </th>
-              <th className="font-semibold font-montserrat text-neutral-700 p-3">
-                Origination Fee
-              </th>
-              <th className="font-semibold font-montserrat text-neutral-700 p-3">
-                Factor
-              </th>
-              <th className="font-semibold font-montserrat text-neutral-700 p-3">
-                Payment
-              </th>
-              <th className="font-semibold font-montserrat text-neutral-700 p-3">
-                Actions
-              </th>
-            </tr>
-          </thead>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            {/* Table Header */}
+            <thead className="border-b border-gray-300">
+              <tr className="text-left bg-white">
+                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                  Customer Name
+                </th>
+                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                  Loan Amount
+                </th>
+                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                  Time(Months)
+                </th>
+                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                  Commission
+                </th>
+                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                  Origination Fee
+                </th>
+                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                  Factor
+                </th>
+                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                  Payment
+                </th>
+                <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                  Actions
+                </th>
+              </tr>
+            </thead>
 
-          {/* Table Body */}
-          <tbody>
-            {rows.map((row, index) => (
-              <>
-                <tr key={row.id}>
-                  {/* Customer Name */}
-                  <td className="py-6 px-3">
-                    <div className="text-neutral-700 px-3 font-medium font-raleway">
-                      {row.customerName}
-                    </div>
-                  </td>
+            {/* Table Body */}
+            <tbody>
+              {rows.map((row, index) => (
+                <>
+                  <tr key={row.id}>
+                    {/* Customer Name */}
+                    <td className="py-6 px-3">
+                      <div className="text-neutral-700 px-3 font-medium font-raleway">
+                        {row.customerName}
+                      </div>
+                    </td>
 
-                  {/* Loan Amount */}
-                  <td className="py-6 px-3">
-                    <div className="text-neutral-700 px-3 font-medium font-raleway">
-                      {row.loanAmount}
-                    </div>
-                  </td>
+                    {/* Loan Amount */}
+                    <td className="py-6 px-3">
+                      <div className="text-neutral-700 px-3 font-medium font-raleway">
+                        {row.loanAmount}
+                      </div>
+                    </td>
 
-                  {/* Time (Months) */}
-                  <td className="py-6 px-3">
-                    <div className="text-neutral-700 px-3 font-medium font-raleway">
-                      {row.timeMonths}
-                    </div>
-                  </td>
+                    {/* Time (Months) */}
+                    <td className="py-6 px-3">
+                      <div className="text-neutral-700 px-3 font-medium font-raleway">
+                        {row.timeMonths}
+                      </div>
+                    </td>
 
-                  {/* Commission */}
-                  <td className="py-6 px-3">
-                    <div className="text-neutral-700 px-3 font-medium font-raleway">
-                      {row.commission}
-                    </div>
-                  </td>
+                    {/* Commission */}
+                    <td className="py-6 px-3">
+                      <div className="text-neutral-700 px-3 font-medium font-raleway">
+                        {row.commission}
+                      </div>
+                    </td>
 
-                  {/* Origination Fee */}
-                  <td className="py-6 px-3">
-                    <div className="text-neutral-700 px-3 font-medium font-raleway">
-                      {row.originationFee}
-                    </div>
-                  </td>
+                    {/* Origination Fee */}
+                    <td className="py-6 px-3">
+                      <div className="text-neutral-700 px-3 font-medium font-raleway">
+                        {row.originationFee}
+                      </div>
+                    </td>
 
-                  {/* Factor */}
-                  <td className="py-6 px-3">
-                    <div className="text-neutral-700 px-3 font-medium font-raleway">
-                      {row.factor}
-                    </div>
-                  </td>
+                    {/* Factor */}
+                    <td className="py-6 px-3">
+                      <div className="text-neutral-700 px-3 font-medium font-raleway">
+                        {row.factor}
+                      </div>
+                    </td>
 
-                  {/* Payment */}
-                  <td className="py-6 px-3">
-                    <div className="text-neutral-700 px-3 font-medium font-raleway">
-                      {row.payment}
-                    </div>
-                  </td>
+                    {/* Payment */}
+                    <td className="py-6 px-3">
+                      <div className="text-neutral-700 px-3 font-medium font-raleway">
+                        {row.payment}
+                      </div>
+                    </td>
 
-                  {/* Actions */}
-                  <td className="py-6 px-3 flex gap-2 items-center">
-                    <button>
-                      <Image
-                        src={documentIcon}
-                        alt="Delete"
-                        className="w-5 h-5 cursor-pointer"
-                        onClick={() => handleSubmissionView(row)}
-                      />
-                    </button>
-                    <button>
-                      <Image
-                        src={trashIcon}
-                        alt="Delete"
-                        className="w-5 h-5 cursor-pointer"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                {index < rows.length - 1 && (
-                  <tr>
-                    <td colSpan={8} className="p-0">
-                      <hr className="border-t border-gray-300" />
+                    {/* Actions */}
+                    <td className="py-6 px-3 flex gap-2 items-center">
+                      <button>
+                        <Image
+                          src={documentIcon}
+                          alt="Delete"
+                          className="w-5 h-5 cursor-pointer"
+                          onClick={() => handleSubmissionView(row)}
+                        />
+                      </button>
+                      <button>
+                        <Image
+                          src={trashIcon}
+                          alt="Delete"
+                          className="w-5 h-5 cursor-pointer"
+                        />
+                      </button>
                     </td>
                   </tr>
-                )}
-              </>
-            ))}
-          </tbody>
-        </table>
+                  {index < rows.length - 1 && (
+                    <tr>
+                      <td colSpan={8} className="p-0">
+                        <hr className="border-t border-gray-300" />
+                      </td>
+                    </tr>
+                  )}
+                </>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         {/* checking if modal is open and submission view data is set */}
         {isModalOpen && submissionData && (
