@@ -7,6 +7,7 @@ import percenticon from "../../../assets/images/icon-percent.png";
 import plusicon from "../../../assets/images/icon-plus.png";
 import trashicon from "@/app/assets/icons/icon-trash-outline.png";
 import backIcon from "@/app/assets/icons/icon-chevron-left-solid.png";
+import { useRouter } from "next/navigation";
 
 interface Row {
   id: number;
@@ -14,6 +15,10 @@ interface Row {
 
 export default function ISOInterface() {
   const [rows, setRows] = useState<Row[]>([{ id: Date.now() }]);
+
+  // initializing the navigation hook
+  const router = useRouter();
+
   const addRow = () => {
     setRows([...rows, { id: Date.now() }]);
   };
@@ -26,7 +31,10 @@ export default function ISOInterface() {
     <div className="mx-8 mt-8">
       <header className="flex flex-wrap gap-10 justify-between items-center">
         <div className="flex gap-3 items-center self-stretch my-auto">
-          <div className="flex flex-col justify-center items-center self-stretch px-2.5 my-auto w-11 h-11 bg-white rounded-md border-2 border-solid border-neutral-200 ">
+          <div
+            onClick={() => router.back()}
+            className="flex flex-col justify-center items-center self-stretch px-2.5 my-auto w-11 h-11 bg-white rounded-md border-2 border-solid border-neutral-200 cursor-pointer"
+          >
             <Image src={backIcon} alt="back icon" width={24} height={24} />
           </div>
           <h1 className="self-stretch my-auto font-montserrat text-2xl font-semibold tracking-tight text-right text-neutral-700">

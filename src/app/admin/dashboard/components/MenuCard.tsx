@@ -1,10 +1,14 @@
+"use client";
+
 import Image, { StaticImageData } from "next/image";
+import { useRouter } from "next/navigation";
 
 interface MenuCard {
   image: StaticImageData;
   title: string;
   description: string;
   badgeCount?: number;
+  route: string;
 }
 
 const MenuCard: React.FC<MenuCard> = ({
@@ -12,9 +16,21 @@ const MenuCard: React.FC<MenuCard> = ({
   title,
   description,
   badgeCount,
+  route,
 }) => {
+  // initializing the navigation hook
+  const router = useRouter();
+
+  // function for handling navigation
+  const handleNavigation = () => {
+    router.push(route);
+  };
+
   return (
-    <div className="w-[410px] pb-6 bg-white rounded-[10px] border border-[#e1e1e1] flex-col justify-start items-center gap-6 inline-flex">
+    <div
+      onClick={handleNavigation}
+      className="w-[410px] pb-6 bg-white rounded-[10px] border border-[#e1e1e1] flex-col justify-start items-center gap-6 inline-flex cursor-pointer"
+    >
       <Image src={image} alt="dashboard menu image" width={410} height={282} />
       <div className="w-[362px] h-[84px] flex-col justify-center items-start gap-3 flex">
         <div className="self-stretch justify-start items-center gap-3 inline-flex">
