@@ -16,6 +16,7 @@ const config: Config = {
       fontFamily: {
         montserrat: ["var(--font-montserrat)", "sans-serif"],
         raleway: ["var(--font-raleway)", "sans-serif"],
+        inter: ["var(--font-inter)", "sans-serif"],
       },
     },
   },

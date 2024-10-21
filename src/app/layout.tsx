@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
-import { Montserrat, Raleway } from "next/font/google";
+import { Montserrat, Raleway, Inter } from "next/font/google";
 import Navbar from "@/app/components/Header/Navbar";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -28,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.variable} ${raleway.variable} bg-gray-100`}
+        className={`${montserrat.variable} ${raleway.variable} ${inter.variable} bg-gray-100`}
         suppressHydrationWarning={true}
       >
         <Navbar />
