@@ -13,3 +13,27 @@
     --foreground: #e1e1e1;
   }
 }
+@layer base {
+  input[type="range"]::-webkit-slider-thumb {
+    @apply appearance-none h-[20px] w-[20px] bg-secondary rounded-[50%] cursor-pointer;
+  }
+  input[type="range"]::-moz-range-thumb {
+    @apply appearance-none h-[20px] w-[20px] bg-secondary rounded-[50%] cursor-pointer;
+  }
+  input[type="range"] {
+    @apply appearance-none bg-[#EEEEEE] h-[6px] rounded-lg;
+  }
+  input[type="radio"] {
+    @apply appearance-none w-5 h-5 border-2 border-gray-400 bg-white rounded-full cursor-pointer relative;
+  }
+
+  input[type="radio"]:checked {
+    @apply bg-white border-[#2E6FAC];
+  }
+
+  input[type="radio"]:checked::before {
+    content: "";
+    @apply absolute top-1/2 left-1/2 w-3 h-3 bg-[#2E6FAC] rounded-full;
+    transform: translate(-50%, -50%);
+  }
+}

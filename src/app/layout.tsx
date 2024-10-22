@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.variable} ${raleway.variable} ${inter.variable} bg-gray-100`}
+        className={`${montserrat.variable} ${raleway.variable} ${inter.variable} bg-gray-100 font-base`}
         suppressHydrationWarning={true}
       >
         <Navbar />
