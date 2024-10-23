@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Raleway, Inter } from "next/font/google";
 import Navbar from "@/app/components/Header/Navbar";
 import "./globals.css";
+import StoreProvider from "./providers/StoreProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,13 +34,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${montserrat.variable} ${raleway.variable} ${inter.variable} bg-gray-100 font-base`}
-        suppressHydrationWarning={true}
-      >
-        <Navbar />
-        {children}
-      </body>
+      <StoreProvider>
+        <body
+          className={`${montserrat.variable} ${raleway.variable} ${inter.variable} bg-gray-100 font-base`}
+          suppressHydrationWarning={true}
+        >
+          <Navbar />
+          {children}
+        </body>
+      </StoreProvider>
     </html>
   );
 }
