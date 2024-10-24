@@ -8,6 +8,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { RootState } from "@/lib/store";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 // defining the login schema for input validations
 const LoginSchema = Yup.object().shape({
@@ -39,16 +40,16 @@ export default function Login() {
       // checking if response status is not true
       if (!response.success) {
         // throwing error with error message
-        throw new Error(response.message || "Login failed");
+        toast.error(response.message);
+      } else {
+        // if response is true then setting the authentication state
+        dispatch(setCredentials({ ...response.data }));
+
+        // redirecting the user to dashboard page
+        router.push("/admin/dashboard");
       }
-
-      // if response is true then setting the authentication state
-      dispatch(setCredentials({ ...response.data }));
-
-      // redirecting the user to dashboard page
-      router.push("/admin/dashboard");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error);
     }
   };
 
@@ -86,7 +87,7 @@ export default function Login() {
                 <ErrorMessage
                   name="email"
                   component="span"
-                  className="text-red-600 text-xs text-left w-full"
+                  className="text-red-600 text-xs text-left w-full min-h-10"
                 />
               </div>
               <div className="self-stretch h-16 flex-col justify-center items-center gap-1 flex">
