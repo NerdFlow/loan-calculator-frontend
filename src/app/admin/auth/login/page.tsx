@@ -75,7 +75,7 @@ export default function Login() {
             <Form className="self-stretch flex-col justify-center items-center gap-5 flex w-full">
               <div className="self-stretch h-16 flex-col justify-center items-center gap-1 flex">
                 <div className="self-stretch text-black text-sm font-medium font-raleway">
-                  Login
+                  Email
                 </div>
                 <Field
                   type="email"
