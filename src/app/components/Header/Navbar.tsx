@@ -32,7 +32,6 @@ const Navbar = () => {
         // showing error message if there is any error
         toast.error(response.message);
       } else {
-        console.log(response);
         dispatch(logout());
 
         // redirecting user to login page
