@@ -9,6 +9,7 @@ import { RootState } from "@/lib/store";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import ButtonLoader from "@/app/components/Loaders/ButtonLoader";
 
 // defining the login schema for input validations
 const LoginSchema = Yup.object().shape({
@@ -110,11 +111,17 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={isSubmitting || isLoading}
-                  className="self-stretch h-11 px-[3px] py-3 bg-[#2e6fac] rounded-[45px] flex-col justify-center items-center gap-2.5 flex"
+                  className="self-stretch h-11 px-[3px] py-3 bg-[#2e6fac] rounded-[45px] flex justify-center items-center gap-2.5"
                 >
-                  <div className="text-right text-white text-base font-semibold font-montserrat leading-tight">
-                    {isLoading ? "Submitting" : "Login"}
-                  </div>
+                  {isLoading ? (
+                    // Loader spinner
+                    <ButtonLoader />
+                  ) : (
+                    // Text for Login
+                    <div className="text-right text-white text-base font-semibold font-montserrat leading-tight">
+                      Login
+                    </div>
+                  )}
                 </button>
               </div>
             </Form>
