@@ -1,13 +1,10 @@
 "use client";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "@/lib/slices/auth/authApiSlice";
 import { setCredentials } from "@/lib/slices/auth/authSlice";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { RootState } from "@/lib/store";
 import * as Yup from "yup";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ButtonLoader from "@/app/components/Loaders/ButtonLoader";
 
@@ -23,14 +20,6 @@ export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
-  const { userInfo } = useSelector((state: RootState) => state.auth);
-
-  useEffect(() => {
-    // checking if user info already exists then redirect user to dashboard page
-    if (userInfo) {
-      router.push("/admin/dashboard");
-    }
-  }, [userInfo, router]);
 
   // function for handling the login
   const handleLogin = async (values: { email: string; password: string }) => {
