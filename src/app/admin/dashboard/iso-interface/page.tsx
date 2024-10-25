@@ -11,20 +11,61 @@ import { useRouter } from "next/navigation";
 
 interface Row {
   id: number;
+  loan_amount: string;
+  payment_frequency: string;
+  commission: string;
+  origination_fee: string;
+  factor: string;
+  buy_rate: string;
+  payment: string;
 }
 
 export default function ISOInterface() {
-  const [rows, setRows] = useState<Row[]>([{ id: Date.now() }]);
+  const [customerName, setCustomerName] = useState("");
+  const [rows, setRows] = useState<Row[]>([
+    {
+      id: Date.now(),
+      loan_amount: "",
+      payment_frequency: "",
+      commission: "",
+      origination_fee: "",
+      factor: "",
+      buy_rate: "",
+      payment: "",
+    },
+  ]);
 
   // initializing the navigation hook
   const router = useRouter();
 
+  // function for adding new row to the table
   const addRow = () => {
-    setRows([...rows, { id: Date.now() }]);
+    setRows([
+      ...rows,
+      {
+        id: Date.now(),
+        loan_amount: "",
+        payment_frequency: "",
+        commission: "",
+        origination_fee: "",
+        factor: "",
+        buy_rate: "",
+        payment: "",
+      },
+    ]);
   };
+
+  console.log(rows);
 
   const deleteRow = (id: number) => {
     setRows(rows.filter((row) => row.id !== id));
+  };
+
+  const handleRowChange = (id: number, field: keyof Row, value: string) => {
+    const updatedRows = rows.map((row) =>
+      row.id === id ? { ...row, [field]: value } : row
+    );
+    setRows(updatedRows);
   };
 
   return (
@@ -51,6 +92,8 @@ export default function ISOInterface() {
               id="customerName"
               className="flex-1 shrink self-stretch my-auto opacity-40 basis-0 text-ellipsis font-raleway"
               placeholder="Enter customer name"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
             />
           </div>
         </div>
@@ -101,6 +144,10 @@ export default function ISOInterface() {
                         type="text"
                         placeholder="$50,000"
                         className="flex-1 w-20 font-raleway focus:outline-none"
+                        value={row.loan_amount}
+                        onChange={(e) =>
+                          handleRowChange(row.id, "loan_amount", e.target.value)
+                        }
                       />
                       <Image
                         src={dollaricon}
@@ -113,7 +160,17 @@ export default function ISOInterface() {
                   {/* Payment Frequency */}
                   <td className="py-2 px-3 border-b">
                     <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium font-raleway  tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
-                      <select className="w-full border-none outline-none">
+                      <select
+                        className="w-full border-none outline-none"
+                        value={row.payment_frequency}
+                        onChange={(e) =>
+                          handleRowChange(
+                            row.id,
+                            "payment_frequency",
+                            e.target.value
+                          )
+                        }
+                      >
                         <option value="weekly">-Select-</option>
                         <option value="biweekly">Bi-Weekly</option>
                         <option value="monthly">Monthly</option>
@@ -128,6 +185,10 @@ export default function ISOInterface() {
                         type="text"
                         placeholder="2.5"
                         className="flex-1  font-raleway  w-20 focus:outline-none"
+                        value={row.commission}
+                        onChange={(e) =>
+                          handleRowChange(row.id, "commission", e.target.value)
+                        }
                       />
                       <Image
                         src={percenticon}
@@ -144,6 +205,14 @@ export default function ISOInterface() {
                         type="text"
                         placeholder="$50,000"
                         className="flex-1  font-raleway  w-20 focus:outline-none"
+                        value={row.origination_fee}
+                        onChange={(e) =>
+                          handleRowChange(
+                            row.id,
+                            "origination_fee",
+                            e.target.value
+                          )
+                        }
                       />
                       <Image
                         src={dollaricon}
@@ -160,6 +229,10 @@ export default function ISOInterface() {
                         type="text"
                         placeholder="1.2"
                         className="flex-1  font-raleway  w-20 focus:outline-none"
+                        value={row.factor}
+                        onChange={(e) =>
+                          handleRowChange(row.id, "factor", e.target.value)
+                        }
                       />
                     </div>
                   </td>
@@ -171,6 +244,10 @@ export default function ISOInterface() {
                         type="text"
                         placeholder="$50,000"
                         className="flex-1  font-raleway  w-20 focus:outline-none"
+                        value={row.buy_rate}
+                        onChange={(e) =>
+                          handleRowChange(row.id, "buy_rate", e.target.value)
+                        }
                       />
                       <Image
                         src={dollaricon}
@@ -187,6 +264,10 @@ export default function ISOInterface() {
                         type="text"
                         placeholder="$50,000"
                         className="flex-1  font-raleway w-20 focus:outline-none"
+                        value={row.payment}
+                        onChange={(e) =>
+                          handleRowChange(row.id, "payment", e.target.value)
+                        }
                       />
                       <Image
                         src={dollaricon}
