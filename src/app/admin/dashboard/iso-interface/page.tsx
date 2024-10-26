@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useAddIsoPackagesMutation } from "@/lib/slices/iso-interface/isoApiSlice";
 import { toast } from "react-toastify";
 import OverlayLoader from "@/app/components/Loaders/OverlayLoader";
+import ClipboardIcon from "@/app/assets/icons/icon-square-2-stack-outline.png";
 
 interface Row {
   id: number;
@@ -26,6 +27,7 @@ interface Row {
 export default function ISOInterface() {
   const [customerName, setCustomerName] = useState("");
   const [sharingLink, setSharingLink] = useState("");
+  const [copySuccess, setCopySuccess] = useState("");
   const [rows, setRows] = useState<Row[]>([
     {
       id: Date.now(),
@@ -95,6 +97,18 @@ export default function ISOInterface() {
       setSharingLink(response.link);
       toast.success(response.message || "Packages added successfully");
     } catch (error) {}
+  };
+
+  // Function to copy the link to clipboard
+  const copyToClipboard = () => {
+    navigator.clipboard
+      .writeText(sharingLink)
+      .then(() => {
+        setCopySuccess("Link copied!");
+      })
+      .catch((error) => {
+        setCopySuccess("Failed to copy link");
+      });
   };
 
   return (
@@ -175,9 +189,9 @@ export default function ISOInterface() {
                     <td className="py-2 px-3 border-b">
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="$50,000"
-                          className="flex-1 w-20 font-raleway focus:outline-none"
+                          className="flex-1 w-20 font-raleway focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.loan_amount}
                           onChange={(e) =>
                             handleRowChange(
@@ -212,6 +226,7 @@ export default function ISOInterface() {
                           <option value="Weekly">-Select-</option>
                           <option value="Biweekly">Bi-Weekly</option>
                           <option value="Monthly">Monthly</option>
+                          <option value="Daily">Daily</option>
                         </select>
                       </div>
                     </td>
@@ -220,9 +235,9 @@ export default function ISOInterface() {
                     <td className="py-2 px-3 border-b">
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="2.5"
-                          className="flex-1  font-raleway  w-20 focus:outline-none"
+                          className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.commission}
                           onChange={(e) =>
                             handleRowChange(
@@ -244,9 +259,9 @@ export default function ISOInterface() {
                     <td className="py-2 px-3 border-b">
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="$50,000"
-                          className="flex-1  font-raleway  w-20 focus:outline-none"
+                          className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.origination_fee}
                           onChange={(e) =>
                             handleRowChange(
@@ -268,9 +283,9 @@ export default function ISOInterface() {
                     <td className="py-2 px-3 border-b">
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="1.2"
-                          className="flex-1  font-raleway  w-20 focus:outline-none"
+                          className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.factor}
                           onChange={(e) =>
                             handleRowChange(row.id, "factor", e.target.value)
@@ -283,9 +298,9 @@ export default function ISOInterface() {
                     <td className="py-2 px-3 border-b">
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="$50,000"
-                          className="flex-1  font-raleway  w-20 focus:outline-none"
+                          className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.buy_rate}
                           onChange={(e) =>
                             handleRowChange(row.id, "buy_rate", e.target.value)
@@ -303,9 +318,9 @@ export default function ISOInterface() {
                     <td className="py-2 px-3 border-b">
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
-                          type="text"
+                          type="number"
                           placeholder="$50,000"
-                          className="flex-1  font-raleway w-20 focus:outline-none"
+                          className="flex-1  font-raleway w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.payment}
                           onChange={(e) =>
                             handleRowChange(row.id, "payment", e.target.value)
@@ -357,7 +372,7 @@ export default function ISOInterface() {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-8 p-4 border border-gray-300 bg-white rounded-lg">
-          <div className="w-full md:w-[75%] mb-4 md:mb-0">
+          <div className="w-full md:w-[65%] mb-4 md:mb-0">
             {" "}
             {/* Full width on small screens */}
             <h1 className="font-montserrat font-bold text-lg">Generate Link</h1>
@@ -368,13 +383,41 @@ export default function ISOInterface() {
               integrity.
             </p>
           </div>
-          <div className="w-full md:w-auto flex justify-end">
-            <button
-              onClick={handleSubmit}
-              className="w-full md:w-auto flex justify-center font-semibold items-center px-6 py-3 rounded-full bg-[#2E6FAC] text-white font-montserrat"
-            >
-              Save and Generate Link
-            </button>
+          <div className="w-full md:w-[30%] flex justify-end">
+            {!sharingLink ? (
+              <button
+                onClick={handleSubmit}
+                className="w-full md:w-auto flex justify-center font-semibold items-center px-6 py-3 rounded-full bg-[#2E6FAC] text-white font-montserrat"
+              >
+                Save and Generate Link
+              </button>
+            ) : (
+              <>
+                <div className="flex items-center gap-2.5 pr-2 pl-3 mt-1 w-full font-medium tracking-tight bg-white rounded-md border border-solid border-neutral-200 min-h-[44px]">
+                  {/* Input Field */}
+                  <input
+                    type="text"
+                    value={sharingLink}
+                    readOnly
+                    className="flex-1 font-raleway text-neutral-700 focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap"
+                  />
+
+                  {/* Clipboard Icon */}
+                  <Image
+                    src={ClipboardIcon}
+                    alt="copy icon"
+                    className="cursor-pointer w-6 h-6"
+                    onClick={copyToClipboard}
+                  />
+                </div>
+                <div
+                  id="customerName"
+                  className="flex-1 shrink self-stretch my-auto opacity-40 basis-0 text-ellipsis font-raleway"
+                >
+                  {" "}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
