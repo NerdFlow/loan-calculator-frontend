@@ -169,7 +169,7 @@ export default function Offer() {
                   </p>
                 </div>
                 <div className="flex-grow flex justify-end items-center">
-                  <div className="w-[80%] max-w-[600px] relative">
+                  <div className="w-[470px] max-w-full relative">
                     <p className="absolute left-0 -bottom-[15px] text-sm">
                       ${loanMin}
                     </p>
@@ -198,7 +198,7 @@ export default function Offer() {
                   </p>
                 </div>
                 <div className="flex-grow flex justify-end items-center">
-                  <div className="w-[80%] max-w-[600px] relative">
+                  <div className="w-[470px] max-w-full relative">
                     <p className="absolute left-0 -bottom-[15px] text-sm">
                       {commissionMin}%
                     </p>
@@ -227,7 +227,7 @@ export default function Offer() {
                   </p>
                 </div>
                 <div className="flex-grow flex justify-end items-center">
-                  <div className="w-[80%] max-w-[600px] relative">
+                  <div className="w-[470px] max-w-full relative">
                     <p className="absolute left-0 -bottom-[15px] text-sm">
                       ${originationFeeMin}
                     </p>
