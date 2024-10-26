@@ -340,8 +340,17 @@ export default function ISOInterface() {
                         <Image
                           src={trashicon}
                           alt="trash-icon"
-                          className="w-6 h-6 cursor-pointer"
-                          onClick={() => deleteRow(row.id)}
+                          className={`w-6 h-6 cursor-pointer ${
+                            rows.length === 1 || sharingLink
+                              ? "opacity-50 cursor-default"
+                              : ""
+                          }`}
+                          onClick={() =>
+                            // checking if there is only one row then dont allow to delete
+                            rows.length > 1 && !sharingLink
+                              ? deleteRow(row.id)
+                              : null
+                          }
                         />
                       </div>
                     </td>
