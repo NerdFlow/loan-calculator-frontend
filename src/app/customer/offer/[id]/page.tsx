@@ -64,8 +64,7 @@ export default function Offer() {
           .sort((a, b) => a - b)
       )
     );
-
-    setloanAmounts(filteredLoans.filter((v) => !loanAmounts.includes(v)));
+    setloanAmounts(filteredLoans);
   }, [frequency]);
 
   useEffect(() => {
@@ -96,13 +95,14 @@ export default function Offer() {
     ).sort((a, b) => a - b);
 
     setCommissionAmounts(filteredCommissions);
-  }, [loanAmount]);
+  }, [loanAmount, frequency]);
 
   useEffect(() => {
     const filteredPackages = packages.filter(
       (pkg) =>
         pkg.payment_frequency === frequency + "" &&
-        pkg.loan_amount == loanAmount + ""
+        pkg.loan_amount == loanAmount + "" &&
+        pkg.commission == commission + ""
     );
 
     // Get unique origination fees and sort them
@@ -111,7 +111,7 @@ export default function Offer() {
     ).sort((a, b) => a - b);
 
     setOriginationFeeses(filteredOrigination);
-  }, [loanAmount]);
+  }, [loanAmount, frequency, commission]);
 
   useEffect(() => {
     if (!loanAmount || !commission || !originationFee) return;
@@ -355,18 +355,6 @@ export default function Offer() {
               </div>
             </div>
             <div className="border-white/25 border-t flex flex-col py-3 gap-2 ">
-              <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
-                <p>Payment</p>
-                <p className="font-semibold">$30,10.70</p>
-              </div>
-              <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
-                <p>Payment</p>
-                <p className="font-semibold">$30,10.70</p>
-              </div>
-              <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
-                <p>Payment</p>
-                <p className="font-semibold">$30,10.70</p>
-              </div>
               <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                 <p>Payment</p>
                 <p className="font-semibold">$30,10.70</p>

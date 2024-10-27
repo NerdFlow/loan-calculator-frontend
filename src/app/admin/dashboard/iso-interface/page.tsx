@@ -223,9 +223,10 @@ export default function ISOInterface() {
                             )
                           }
                         >
-                          <option value="Weekly">-Select-</option>
-                          <option value="Biweekly">Bi-Weekly</option>
+                          <option value="">-Select-</option>
+                          <option value="Bi-Monthly">Bi-Monthly</option>
                           <option value="Monthly">Monthly</option>
+                          <option value="Weekly">Weekly</option>
                           <option value="Daily">Daily</option>
                         </select>
                       </div>
