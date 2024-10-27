@@ -6,46 +6,17 @@ import { useParams } from "next/navigation";
 import { useGetCustomerIsoPackagesQuery } from "@/lib/slices/offer/offerApiSlice";
 import OverlayLoader from "@/app/components/Loaders/OverlayLoader";
 
-export default function Offer() {
-  const packages = [
-    {
-      loan_amount: "40000",
-      payment_frequency: "Monthly",
-      commission: "4.5",
-      origination_fee: "4500",
-      factor: "6.7",
-      buy_rate: "3400",
-      payment: "12000",
-    },
-    {
-      loan_amount: "40000",
-      payment_frequency: "Weekly",
-      commission: "4.5",
-      origination_fee: "4500",
-      factor: "6.7",
-      buy_rate: "3400",
-      payment: "12000",
-    },
-    {
-      loan_amount: "30000",
-      payment_frequency: "Weekly",
-      commission: "3.0",
-      origination_fee: "5500",
-      factor: "8.7",
-      buy_rate: "8400",
-      payment: "2000",
-    },
-    {
-      loan_amount: "10000",
-      payment_frequency: "Monthly",
-      commission: "2.5",
-      origination_fee: "3500",
-      factor: "2.7",
-      buy_rate: "3340",
-      payment: "2000",
-    },
-  ];
+interface Ipackage {
+  loan_amount: string;
+  payment_frequency: string;
+  commission: string;
+  origination_fee: string;
+  factor: string;
+  buy_rate: string;
+  payment: string;
+}
 
+export default function Offer() {
   // initializing the router
   const params = useParams();
 
@@ -56,82 +27,121 @@ export default function Offer() {
   const { data: customerPackages, isLoading } =
     useGetCustomerIsoPackagesQuery(id);
 
-  // console.log(customerPackages);
+  useEffect(() => {
+    if (!customerPackages?.data?.packages) return;
+    setPackages(customerPackages?.data?.packages);
+    const frequencies = Array.from(
+      new Set(
+        (customerPackages.data.packages as Ipackage[]).map((pkg) => {
+          return pkg.payment_frequency;
+        })
+      )
+    );
+    setFrequencies(frequencies);
+    setFrequency(frequencies[0]);
+  }, [customerPackages?.data?.packages]);
 
   // State for storing selected package and input values
-  const [selectedPackage, setSelectedPackage] = useState(packages[0]);
-  const [loanAmount, setLoanAmount] = useState(selectedPackage.loan_amount);
-  const [commission, setCommission] = useState(selectedPackage.commission);
-  const [originationFee, setOriginationFee] = useState(
-    selectedPackage.origination_fee
-  );
-  const [frequency, setFrequency] = useState(selectedPackage.payment_frequency);
-
-  // Determine the min/max for loan amount and commission
-  const loanMin = Math.min(...packages.map((pkg) => parseInt(pkg.loan_amount)));
-  const loanMax = Math.max(...packages.map((pkg) => parseInt(pkg.loan_amount)));
-  const commissionMin = Math.min(
-    ...packages.map((pkg) => parseFloat(pkg.commission))
-  );
-  const commissionMax = Math.max(
-    ...packages.map((pkg) => parseFloat(pkg.commission))
-  );
-
-  const originationFeeMin = Math.min(
-    ...packages.map((pkg) => parseInt(pkg.origination_fee))
-  );
-  const originationFeeMax = Math.max(
-    ...packages.map((pkg) => parseInt(pkg.origination_fee))
-  );
-
-  // Update state when user changes an input
-  const handleLoanAmountChange = (e: any) => {
-    const value = e.target.value;
-    setLoanAmount(value);
-    updatePackage(value, commission, frequency, originationFee);
-  };
-
-  const handleOriginationFeeChange = (e: any) => {
-    const value = e.target.value;
-    setOriginationFee(value);
-    updatePackage(loanAmount, commission, frequency, value);
-  };
-
-  const handleCommissionChange = (e: any) => {
-    const value = e.target.value;
-    setCommission(value);
-    updatePackage(loanAmount, value, frequency, originationFee);
-  };
-
-  const handleFrequencyChange = (e: any) => {
-    const value = e.target.value;
-    setFrequency(value);
-    updatePackage(loanAmount, commission, value, originationFee);
-  };
-
-  // Function to update the selected package based on inputs
-  const updatePackage = (
-    loanAmount: string,
-    commission: string,
-    frequency: string,
-    originationFee: string
-  ) => {
-    const match = packages.find(
-      (pkg) =>
-        pkg.loan_amount === loanAmount &&
-        pkg.commission === commission &&
-        pkg.origination_fee === originationFee &&
-        pkg.payment_frequency === frequency
+  const [packages, setPackages] = useState<Ipackage[]>([]);
+  const [loanAmount, setLoanAmount] = useState<number | null>();
+  const [commission, setCommission] = useState<number | null>();
+  const [originationFee, setOriginationFee] = useState<number | null>();
+  const [frequency, setFrequency] = useState<any>();
+  const [frequencies, setFrequencies] = useState<string[]>();
+  const [loanAmounts, setloanAmounts] = useState<number[]>([]);
+  const [comissionAmounts, setCommissionAmounts] = useState<number[]>([]);
+  const [originationFeeses, setOriginationFeeses] = useState<number[]>([]);
+  const [selectedPackage, setSelectedPackage] = useState<Ipackage | null>();
+  useEffect(() => {
+    const filteredPackages = packages.filter(
+      (pkg) => pkg.payment_frequency === frequency
     );
-    if (match) {
-      setSelectedPackage(match);
-      // setOriginationFee(match.origination_fee);
-    }
-  };
+
+    const filteredLoans = Array.from(
+      new Set(
+        filteredPackages
+          .map((pkg) => parseInt(pkg.loan_amount))
+          .sort((a, b) => a - b)
+      )
+    );
+
+    setloanAmounts(filteredLoans.filter((v) => !loanAmounts.includes(v)));
+  }, [frequency]);
 
   useEffect(() => {
-    updatePackage(loanAmount, commission, frequency, originationFee);
-  }, [loanAmount, commission, frequency, originationFee]);
+    if (loanAmounts) setLoanAmount(loanAmounts[0]);
+    else setLoanAmount(null);
+  }, [loanAmounts]);
+
+  useEffect(() => {
+    if (comissionAmounts) setCommission(comissionAmounts[0]);
+    else setCommission(null);
+  }, [comissionAmounts, loanAmount]);
+
+  useEffect(() => {
+    if (originationFeeses) setOriginationFee(originationFeeses[0]);
+    else setOriginationFee(null);
+  }, [originationFeeses, loanAmount]);
+
+  useEffect(() => {
+    const filteredPackages = packages.filter(
+      (pkg) =>
+        pkg.payment_frequency === frequency + "" &&
+        pkg.loan_amount == loanAmount + ""
+    );
+
+    // Get unique commission amounts and sort them
+    const filteredCommissions = Array.from(
+      new Set(filteredPackages.map((pkg) => parseFloat(pkg.commission)))
+    ).sort((a, b) => a - b);
+
+    setCommissionAmounts(filteredCommissions);
+  }, [loanAmount]);
+
+  useEffect(() => {
+    const filteredPackages = packages.filter(
+      (pkg) =>
+        pkg.payment_frequency === frequency + "" &&
+        pkg.loan_amount == loanAmount + ""
+    );
+
+    // Get unique origination fees and sort them
+    const filteredOrigination = Array.from(
+      new Set(filteredPackages.map((pkg) => parseInt(pkg.origination_fee)))
+    ).sort((a, b) => a - b);
+
+    setOriginationFeeses(filteredOrigination);
+  }, [loanAmount]);
+
+  useEffect(() => {
+    if (!loanAmount || !commission || !originationFee) return;
+    const selectedPackage = packages.filter(
+      (pkg) =>
+        pkg.loan_amount == loanAmount + "" &&
+        pkg.commission == commission + "" &&
+        pkg.origination_fee == originationFee + ""
+    );
+    setSelectedPackage(selectedPackage[0]);
+  }, [loanAmount, commission, originationFee]);
+
+  //hanlders
+
+  const handleLoanAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoanAmount(loanAmounts[(e.target as any).value - 1]);
+  };
+
+  const handleCommissionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCommission(comissionAmounts[(e.target as any).value - 1]);
+  };
+  const handleOrignationFeeChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setOriginationFee(originationFeeses[(e.target as any).value - 1]);
+  };
+
+  const handleFrequencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFrequency(e.target.value);
+  };
 
   return (
     <>
@@ -149,8 +159,8 @@ export default function Offer() {
         <OfferBanner />
 
         {/* caluclator layout */}
-        <div className="grid sm:grid-cols-12 gap-4 mt-5">
-          <div className="bg-white min-h-[100px] rounded-md sm:col-span-8 border">
+        <div className="grid grid-cols-12 gap-4 mt-5">
+          <div className="bg-white min-h-[100px] rounded-md col-span-12 lg:col-span-8 border">
             <div className="p-6 flex justify-between items-start gap-6">
               {/* Merchant Section */}
               <div className="flex flex-col justify-start items-start gap-1.5">
@@ -174,9 +184,18 @@ export default function Offer() {
                     className="w-32 h-8 border-gray-300 rounded-md"
                   >
                     <option value="">Select</option>
-                    <option value="Daily">Daily</option>
-                    <option value="Weekly">Weekly</option>
-                    <option value="Monthly">Monthly</option>
+                    {frequencies &&
+                      frequencies.map((frequency, index) => {
+                        return (
+                          <option
+                            className="capitalize"
+                            key={index}
+                            value={frequency}
+                          >
+                            {frequency}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
@@ -194,20 +213,21 @@ export default function Offer() {
                 <div className="flex-grow flex justify-end items-center">
                   <div className="w-[470px] max-w-full relative">
                     <p className="absolute left-0 -bottom-[15px] text-sm">
-                      ${loanMin}
+                      {loanAmounts[0]}
                     </p>
                     <input
+                      disabled={loanAmounts.length <= 1}
                       id="minmax-range"
                       type="range"
-                      step={loanMax - loanMin}
+                      step={1}
                       className="w-full mb-5"
-                      min={loanMin}
-                      max={loanMax}
-                      value={loanAmount}
+                      min={1}
+                      max={loanAmounts.length}
+                      // value={loanAmount}
                       onChange={handleLoanAmountChange}
                     />
                     <p className="absolute right-0 -bottom-[15px] text-sm">
-                      ${loanMax}
+                      {loanAmounts[loanAmounts.length - 1]}
                     </p>
                   </div>
                 </div>
@@ -215,7 +235,7 @@ export default function Offer() {
               {/* s2 */}
               <div className="flex flex-wrap justify-between">
                 <div className="">
-                  <p>Commision</p>
+                  <p>Commission</p>
                   <p className="font-semibold text-xl text-secondary">
                     {commission}%
                   </p>
@@ -223,20 +243,20 @@ export default function Offer() {
                 <div className="flex-grow flex justify-end items-center">
                   <div className="w-[470px] max-w-full relative">
                     <p className="absolute left-0 -bottom-[15px] text-sm">
-                      {commissionMin}%
+                      {comissionAmounts[0]}
                     </p>
                     <input
+                      disabled={!(comissionAmounts.length > 1)}
                       id="minmax-range"
                       type="range"
-                      step={commissionMax - commissionMin}
-                      min={commissionMin}
-                      max={commissionMax}
-                      value={commission}
-                      onChange={handleCommissionChange}
+                      step={1}
                       className="w-full mb-5"
+                      min={1}
+                      max={comissionAmounts.length}
+                      onChange={handleCommissionChange}
                     />
                     <p className="absolute right-0 -bottom-[15px] text-sm">
-                      {commissionMax}%
+                      {comissionAmounts[comissionAmounts.length - 1]}
                     </p>
                   </div>
                 </div>
@@ -244,7 +264,7 @@ export default function Offer() {
               {/* s3 */}
               <div className="flex flex-wrap justify-between">
                 <div className="">
-                  <p>Organization Fee</p>
+                  <p>Origination Fee</p>
                   <p className="font-semibold text-xl text-secondary">
                     ${originationFee}
                   </p>
@@ -252,20 +272,20 @@ export default function Offer() {
                 <div className="flex-grow flex justify-end items-center">
                   <div className="w-[470px] max-w-full relative">
                     <p className="absolute left-0 -bottom-[15px] text-sm">
-                      ${originationFeeMin}
+                      {originationFeeses[0]}
                     </p>
                     <input
+                      disabled={!(originationFeeses.length > 1)}
                       id="minmax-range"
                       type="range"
-                      step={originationFeeMax - originationFeeMin}
-                      min={originationFeeMin}
-                      max={originationFeeMax}
-                      value={originationFee}
-                      onChange={handleOriginationFeeChange}
+                      step={1}
                       className="w-full mb-5"
+                      min={1}
+                      max={originationFeeses.length}
+                      onChange={handleOrignationFeeChange}
                     />
                     <p className="absolute right-0 -bottom-[15px] text-sm">
-                      ${originationFeeMax}
+                      {originationFeeses[originationFeeses.length - 1]}
                     </p>
                   </div>
                 </div>
@@ -307,12 +327,12 @@ export default function Offer() {
                 substantial change, we will provide a more prominent notice
                 (including, for certain services, an email or other type of
                 notification of Privacy Policy changes) prior to the change
-                becoming effective. 
+                becoming effective.
               </p>
             </div>
           </div>
 
-          <div className="bg-major p-3 flex flex-col gap-3 text-white min-h-[100px] rounded-md sm:col-span-4 border">
+          <div className="bg-major p-3 flex flex-col gap-3 text-white min-h-[100px] rounded-md col-span-12 lg:col-span-4 border">
             <div className="flex  flex-col justify-start items-center gap-2">
               <p className="text-sm font-semibold ">Offer Summary</p>
               <div className="bg-minor w-full rounded text-center p-4 flex flex-col gap-2">
@@ -323,18 +343,18 @@ export default function Offer() {
             <div className="flex gap-2 flex-col ">
               <div className="font-inter flex justify-between">
                 <p>Buy Rate</p>
-                <p>${selectedPackage.buy_rate}</p>
+                <p>${selectedPackage && selectedPackage.buy_rate}</p>
               </div>
               <div className="font-inter flex justify-between">
                 <p>Factor</p>
-                <p>{selectedPackage.factor}</p>
+                <p>{selectedPackage && selectedPackage.factor}</p>
               </div>
               <div className="font-inter flex justify-between">
                 <p>Payment</p>
-                <p>${selectedPackage.payment}</p>
+                <p>${selectedPackage && selectedPackage.payment}</p>
               </div>
             </div>
-            <div className="border-white/25 border-t flex flex-col py-3 gap-2">
+            <div className="border-white/25 border-t flex flex-col py-3 gap-2 ">
               <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                 <p>Payment</p>
                 <p className="font-semibold">$30,10.70</p>

@@ -14,6 +14,11 @@
   }
 }
 @layer base {
+  input[type="range"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   input[type="range"]::-webkit-slider-thumb {
     @apply appearance-none h-[20px] w-[20px] bg-secondary rounded-[50%] cursor-pointer;
   }
