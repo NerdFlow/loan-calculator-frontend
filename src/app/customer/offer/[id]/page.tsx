@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import OfferBanner from "./components/OfferBanner";
+import OfferBanner from "../components/OfferBanner";
+import { useParams } from "next/navigation";
+import { useGetCustomerIsoPackagesQuery } from "@/lib/slices/offer/offerApiSlice";
+import OverlayLoader from "@/app/components/Loaders/OverlayLoader";
 
 export default function Offer() {
   const packages = [
@@ -42,6 +45,18 @@ export default function Offer() {
       payment: "2000",
     },
   ];
+
+  // initializing the router
+  const params = useParams();
+
+  // getting the Id from parameters
+  const { id } = params;
+
+  // initializing the get packages function
+  const { data: customerPackages, isLoading } =
+    useGetCustomerIsoPackagesQuery(id);
+
+  // console.log(customerPackages);
 
   // State for storing selected package and input values
   const [selectedPackage, setSelectedPackage] = useState(packages[0]);
@@ -108,8 +123,6 @@ export default function Offer() {
         pkg.origination_fee === originationFee &&
         pkg.payment_frequency === frequency
     );
-    // console.log({ originationFee, commission, loanAmount, frequency });
-    console.log(match);
     if (match) {
       setSelectedPackage(match);
       // setOriginationFee(match.origination_fee);
@@ -122,6 +135,7 @@ export default function Offer() {
 
   return (
     <>
+      {isLoading && <OverlayLoader />}
       <div className="mx-8 mt-8">
         <header className="flex flex-wrap gap-10 justify-between items-center">
           <div className="flex gap-3 items-center self-stretch my-auto">

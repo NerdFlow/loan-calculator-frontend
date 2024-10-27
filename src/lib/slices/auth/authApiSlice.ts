@@ -16,7 +16,18 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    // method for getting current authenticated user
+    getAuthUser: builder.mutation({
+      query: () => ({
+        url: "/user",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutSessionMutation } = authApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutSessionMutation,
+  useGetAuthUserMutation,
+} = authApiSlice;
