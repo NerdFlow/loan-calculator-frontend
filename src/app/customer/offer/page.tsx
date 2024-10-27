@@ -24,6 +24,15 @@ export default function Offer() {
       payment: "12000",
     },
     {
+      loan_amount: "30000",
+      payment_frequency: "Weekly",
+      commission: "3.0",
+      origination_fee: "5500",
+      factor: "8.7",
+      buy_rate: "8400",
+      payment: "2000",
+    },
+    {
       loan_amount: "10000",
       payment_frequency: "Monthly",
       commission: "2.5",
