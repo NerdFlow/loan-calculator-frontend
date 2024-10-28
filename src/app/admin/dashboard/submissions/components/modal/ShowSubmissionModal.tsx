@@ -5,6 +5,8 @@ import fileIcon from "@/app/assets/icons/icon-file-type.png";
 import downloadIcon from "@/app/assets/icons/icon-download.png";
 import xIcon from "@/app/assets/icons/icon-x-mark-large-solid.png";
 import { Submission } from "@/app/interfaces/Submission/Submission.interface";
+import { useDeleteSubmissionMutation } from "@/lib/slices/submissions/submissionApiSlice";
+import { toast } from "react-toastify";
 
 interface ShowSubmissionProps {
   isModelOpen: boolean;
@@ -20,6 +22,21 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
   // checking if modal is not open then we don't render it
   if (!isModelOpen) return;
 
+  const [deleteSubmittion] = useDeleteSubmissionMutation();
+
+  async function deleteSubmissionAction(id: number) {
+    await deleteSubmittion(id)
+      .unwrap()
+      .then((response) => {
+        if (!response.success) {
+          return toast.error(
+            response?.message ?? "Failed to Delete Submission"
+          );
+        }
+        toast.success(response?.success);
+      });
+  }
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="w-[836px] h-[456px] p-6 bg-white rounded-lg shadow flex-col justify-start items-start gap-6 inline-flex">
@@ -29,7 +46,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               Customer:
             </div>
             <div className="text-[#2e6fac] text-2xl font-semibold  font-montserrat">
-              {submission.customerName}
+              {submission.name}
             </div>
           </div>
           <Image
@@ -48,7 +65,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
                 Loan Amount
               </div>
               <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
-                {submission.loanAmount}
+                {submission.selected_package.loan_amount}
               </div>
             </div>
             <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
@@ -57,7 +74,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  {submission.timeMonths}
+                  {submission.selected_package.payment_frequency}
                 </div>
               </div>
             </div>
@@ -69,7 +86,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  {submission.commission}
+                  {submission.selected_package.commission}
                 </div>
               </div>
             </div>
@@ -78,7 +95,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
                 Origination Fees
               </div>
               <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
-                {submission.originationFee}
+                {submission.selected_package.origination_fee}
               </div>
             </div>
           </div>
@@ -90,7 +107,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
                 Factor
               </div>
               <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
-                {submission.factor}
+                {submission.selected_package.factor}
               </div>
             </div>
             <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
@@ -99,7 +116,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  {submission.payment}
+                  {submission.selected_package.payment}
                 </div>
               </div>
             </div>
@@ -107,11 +124,11 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
           <div className="grow shrink basis-0 h-11 justify-start items-start gap-12 flex">
             <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
               <div className="text-black text-xs font-normal  font-montserrat leading-tight">
-                Original fee
+                Buy Rate
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  $50,000
+                  {submission.selected_package.buy_rate}
                 </div>
               </div>
             </div>
@@ -121,6 +138,9 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               </div>
               <div className="w-6 h-6 relative" />
               <Image
+                onClick={() => {
+                  deleteSubmissionAction(submission.id);
+                }}
                 src={trashIcon}
                 className="cursor-pointer"
                 width={24}
