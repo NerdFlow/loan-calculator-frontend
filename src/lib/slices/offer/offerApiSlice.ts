@@ -8,8 +8,16 @@ export const offerApiSlice = apiSlice.injectEndpoints({
         url: `/customer/packages/${customerId}/retrieve`,
       }),
     }),
+    selectPackage: builder.mutation({
+      query: (payload) => ({
+        url: `/customer/packages/submit`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
 // exporint the functions from iso api slice
-export const { useGetCustomerIsoPackagesQuery } = offerApiSlice;
+export const { useGetCustomerIsoPackagesQuery, useSelectPackageMutation } =
+  offerApiSlice;
