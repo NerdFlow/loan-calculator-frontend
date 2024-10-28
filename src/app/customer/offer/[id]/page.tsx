@@ -7,10 +7,13 @@ import { useGetCustomerIsoPackagesQuery } from "@/lib/slices/offer/offerApiSlice
 import OverlayLoader from "@/app/components/Loaders/OverlayLoader";
 
 interface Ipackage {
+  id: number;
   loan_amount: string;
   payment_frequency: string;
+  time: string;
   commission: string;
   origination_fee: string;
+  net_funding_amount: string;
   factor: string;
   buy_rate: string;
   payment: string;
@@ -44,14 +47,16 @@ export default function Offer() {
   // State for storing selected package and input values
   const [packages, setPackages] = useState<Ipackage[]>([]);
   const [loanAmount, setLoanAmount] = useState<number | null>();
-  const [commission, setCommission] = useState<number | null>();
+  const [timePeriod, setTimePeriod] = useState<number | null>();
   const [originationFee, setOriginationFee] = useState<number | null>();
   const [frequency, setFrequency] = useState<any>();
   const [frequencies, setFrequencies] = useState<string[]>();
   const [loanAmounts, setloanAmounts] = useState<number[]>([]);
-  const [comissionAmounts, setCommissionAmounts] = useState<number[]>([]);
+  const [timePeriods, setTimePeriods] = useState<number[]>([]);
   const [originationFeeses, setOriginationFeeses] = useState<number[]>([]);
   const [selectedPackage, setSelectedPackage] = useState<Ipackage | null>();
+
+  // Initial Frequency
   useEffect(() => {
     const filteredPackages = packages.filter(
       (pkg) => pkg.payment_frequency === frequency
@@ -67,71 +72,84 @@ export default function Offer() {
     setloanAmounts(filteredLoans);
   }, [frequency]);
 
+  // Initialization
   useEffect(() => {
     if (loanAmounts) setLoanAmount(loanAmounts[0]);
     else setLoanAmount(null);
   }, [loanAmounts]);
-
+  // Initialization
   useEffect(() => {
-    if (comissionAmounts) setCommission(comissionAmounts[0]);
-    else setCommission(null);
-  }, [comissionAmounts, loanAmount]);
-
+    if (timePeriods) setTimePeriod(timePeriods[0]);
+    else setTimePeriod(null);
+  }, [timePeriods]);
+  // Initialization
   useEffect(() => {
     if (originationFeeses) setOriginationFee(originationFeeses[0]);
     else setOriginationFee(null);
   }, [originationFeeses, loanAmount]);
 
+  //Time Period Options
   useEffect(() => {
     const filteredPackages = packages.filter(
-      (pkg) =>
-        pkg.payment_frequency === frequency + "" &&
-        pkg.loan_amount == loanAmount + ""
+      (pkg) => pkg.payment_frequency === frequency + ""
     );
-
-    // Get unique commission amounts and sort them
-    const filteredCommissions = Array.from(
-      new Set(filteredPackages.map((pkg) => parseFloat(pkg.commission)))
+    const filteredTimePeriod = Array.from(
+      new Set(filteredPackages.map((pkg) => parseFloat(pkg.time)))
     ).sort((a, b) => a - b);
 
-    setCommissionAmounts(filteredCommissions);
-  }, [loanAmount, frequency]);
+    setTimePeriods(filteredTimePeriod);
+  }, [frequency]);
 
+  // Origination Fee Options
   useEffect(() => {
     const filteredPackages = packages.filter(
       (pkg) =>
         pkg.payment_frequency === frequency + "" &&
         pkg.loan_amount == loanAmount + "" &&
-        pkg.commission == commission + ""
+        pkg.time == timePeriod + ""
     );
 
-    // Get unique origination fees and sort them
     const filteredOrigination = Array.from(
       new Set(filteredPackages.map((pkg) => parseInt(pkg.origination_fee)))
     ).sort((a, b) => a - b);
 
     setOriginationFeeses(filteredOrigination);
-  }, [loanAmount, frequency, commission]);
+  }, [loanAmount, frequency, timePeriod]);
 
+  // Selected Package Selection
   useEffect(() => {
-    if (!loanAmount || !commission || !originationFee) return;
+    if (!loanAmount || !timePeriod || !originationFee) return;
     const selectedPackage = packages.filter(
       (pkg) =>
         pkg.loan_amount == loanAmount + "" &&
-        pkg.commission == commission + "" &&
+        pkg.time == timePeriod + "" &&
         pkg.origination_fee == originationFee + ""
     );
     setSelectedPackage(selectedPackage[0]);
-  }, [loanAmount, commission, originationFee]);
+  }, [loanAmount, timePeriod, originationFee]);
 
   //hanlders
 
   const handleLoanAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoanAmount(loanAmounts[(e.target as any).value - 1]);
+    const filteredTimePeriod = packages.filter(
+      (pkg) =>
+        pkg.payment_frequency === frequency + "" &&
+        pkg.loan_amount == loanAmounts[(e.target as any).value - 1] + ""
+    );
+    setTimePeriod(parseInt(filteredTimePeriod[0].time));
   };
 
-  const handleCommissionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCommission(comissionAmounts[(e.target as any).value - 1]);
+  const handleTimePeriodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTimePeriod(timePeriods[(e.target as any).value - 1]);
+
+    const filteredLoanAmount = packages.filter(
+      (pkg) =>
+        pkg.payment_frequency === frequency + "" &&
+        pkg.time == timePeriods[(e.target as any).value - 1] + ""
+    );
+
+    setLoanAmount(parseInt(filteredLoanAmount[0].loan_amount));
   };
   const handleOrignationFeeChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -141,6 +159,18 @@ export default function Offer() {
 
   const handleFrequencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFrequency(e.target.value);
+  };
+
+  const frequencyUnit = () => {
+    switch (frequency) {
+      case "Monthly":
+      case "Bi-Monthly":
+        return "Months";
+      case "Weekly":
+        return "Weeks";
+      case "Daily":
+        return "Days";
+    }
   };
 
   return (
@@ -223,7 +253,7 @@ export default function Offer() {
                       className="w-full mb-5"
                       min={1}
                       max={loanAmounts.length}
-                      // value={loanAmount}
+                      value={loanAmounts.indexOf(loanAmount ?? 0) + 1}
                       onChange={handleLoanAmountChange}
                     />
                     <p className="absolute right-0 -bottom-[15px] text-sm">
@@ -235,28 +265,29 @@ export default function Offer() {
               {/* s2 */}
               <div className="flex flex-wrap justify-between">
                 <div className="">
-                  <p>Commission</p>
+                  <p>Time ({frequencyUnit()})</p>
                   <p className="font-semibold text-xl text-secondary">
-                    {commission}%
+                    {timePeriod}
                   </p>
                 </div>
                 <div className="flex-grow flex justify-end items-center">
                   <div className="w-[470px] max-w-full relative">
                     <p className="absolute left-0 -bottom-[15px] text-sm">
-                      {comissionAmounts[0]}
+                      {timePeriods[0]}
                     </p>
                     <input
-                      disabled={!(comissionAmounts.length > 1)}
+                      value={timePeriods.indexOf(timePeriod ?? 0) + 1}
+                      disabled={!(timePeriods.length > 1)}
                       id="minmax-range"
                       type="range"
                       step={1}
                       className="w-full mb-5"
                       min={1}
-                      max={comissionAmounts.length}
-                      onChange={handleCommissionChange}
+                      max={timePeriods.length}
+                      onChange={handleTimePeriodChange}
                     />
                     <p className="absolute right-0 -bottom-[15px] text-sm">
-                      {comissionAmounts[comissionAmounts.length - 1]}
+                      {timePeriods[timePeriods.length - 1]}
                     </p>
                   </div>
                 </div>
@@ -342,10 +373,6 @@ export default function Offer() {
             </div>
             <div className="flex gap-2 flex-col ">
               <div className="font-inter flex justify-between">
-                <p>Buy Rate</p>
-                <p>${selectedPackage && selectedPackage.buy_rate}</p>
-              </div>
-              <div className="font-inter flex justify-between">
                 <p>Factor</p>
                 <p>{selectedPackage && selectedPackage.factor}</p>
               </div>
@@ -358,6 +385,22 @@ export default function Offer() {
               <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                 <p>Payment</p>
                 <p className="font-semibold">$30,10.70</p>
+              </div>
+              <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
+                <p>Term</p>
+                <p className="font-semibold">
+                  {timePeriod} {frequencyUnit()}
+                </p>
+              </div>
+              <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
+                <p>Origination Fee</p>
+                <p className="font-semibold">$ {originationFee}</p>
+              </div>
+              <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
+                <p>Net Funding Amount</p>
+                <p className="font-semibold">
+                  $ {selectedPackage?.net_funding_amount}
+                </p>
               </div>
             </div>
             <button className="text-sm bg-secondary rounded-full p-2 font-semibold hover:bg-secondary/80">

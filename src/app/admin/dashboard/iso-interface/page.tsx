@@ -17,8 +17,10 @@ interface Row {
   id: number;
   loan_amount: string;
   payment_frequency: string;
+  time: string;
   commission: string;
   origination_fee: string;
+  net_funding_amount: string;
   factor: string;
   buy_rate: string;
   payment: string;
@@ -33,8 +35,10 @@ export default function ISOInterface() {
       id: Date.now(),
       loan_amount: "",
       payment_frequency: "",
+      time: "",
       commission: "",
       origination_fee: "",
+      net_funding_amount: "",
       factor: "",
       buy_rate: "",
       payment: "",
@@ -55,8 +59,10 @@ export default function ISOInterface() {
         id: Date.now(),
         loan_amount: "",
         payment_frequency: "",
+        time: "",
         commission: "",
         origination_fee: "",
+        net_funding_amount: "",
         factor: "",
         buy_rate: "",
         payment: "",
@@ -158,13 +164,19 @@ export default function ISOInterface() {
                     Loan Amount
                   </th>
                   <th className="font-semibold font-montserrat text-neutral-700 py-2">
-                    Payment Frequency
+                    Frequency
+                  </th>
+                  <th className="font-semibold font-montserrat text-neutral-700 py-2">
+                    Time
                   </th>
                   <th className="font-semibold font-montserrat text-neutral-700 py-2">
                     Commission
                   </th>
                   <th className="font-semibold font-montserrat text-neutral-700 py-2">
                     Origination Fee
+                  </th>
+                  <th className="font-semibold font-montserrat text-neutral-700 py-2">
+                    Net Funding
                   </th>
                   <th className="font-semibold font-montserrat text-neutral-700 py-2">
                     Factor
@@ -232,6 +244,21 @@ export default function ISOInterface() {
                       </div>
                     </td>
 
+                    {/* Origination Fee */}
+                    <td className="py-2 px-3 border-b">
+                      <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
+                        <input
+                          type="number"
+                          // placeholder="$50,000"
+                          className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          value={row.time}
+                          onChange={(e) =>
+                            handleRowChange(row.id, "time", e.target.value)
+                          }
+                        />
+                      </div>
+                    </td>
+
                     {/* Commission */}
                     <td className="py-2 px-3 border-b">
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
@@ -268,6 +295,30 @@ export default function ISOInterface() {
                             handleRowChange(
                               row.id,
                               "origination_fee",
+                              e.target.value
+                            )
+                          }
+                        />
+                        <Image
+                          src={dollaricon}
+                          alt="dollar-icon"
+                          className="w-6 h-6"
+                        />
+                      </div>
+                    </td>
+
+                    {/* Net funding Fee */}
+                    <td className="py-2 px-3 border-b">
+                      <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
+                        <input
+                          type="number"
+                          placeholder="$50,000"
+                          className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          value={row.net_funding_amount}
+                          onChange={(e) =>
+                            handleRowChange(
+                              row.id,
+                              "net_funding_amount",
                               e.target.value
                             )
                           }
