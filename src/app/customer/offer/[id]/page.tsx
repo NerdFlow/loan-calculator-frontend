@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from "react";
 import OfferBanner from "../components/OfferBanner";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useGetCustomerIsoPackagesQuery } from "@/lib/slices/offer/offerApiSlice";
 import OverlayLoader from "@/app/components/Loaders/OverlayLoader";
+import { useDispatch } from "react-redux";
+import {
+  setAllCustomerPackages,
+  setCustomerSelectedPackage,
+} from "@/lib/slices/offer/offerSlice";
 
-interface Ipackage {
+export interface IIisoPackage {
   id: number;
   loan_amount: string;
   payment_frequency: string;
@@ -35,7 +40,7 @@ export default function Offer() {
     setPackages(customerPackages?.data?.packages);
     const frequencies = Array.from(
       new Set(
-        (customerPackages.data.packages as Ipackage[]).map((pkg) => {
+        (customerPackages.data.packages as IIisoPackage[]).map((pkg) => {
           return pkg.payment_frequency;
         })
       )
@@ -45,7 +50,7 @@ export default function Offer() {
   }, [customerPackages?.data?.packages]);
 
   // State for storing selected package and input values
-  const [packages, setPackages] = useState<Ipackage[]>([]);
+  const [packages, setPackages] = useState<IIisoPackage[]>([]);
   const [loanAmount, setLoanAmount] = useState<number | null>();
   const [timePeriod, setTimePeriod] = useState<number | null>();
   const [originationFee, setOriginationFee] = useState<number | null>();
@@ -54,7 +59,7 @@ export default function Offer() {
   const [loanAmounts, setloanAmounts] = useState<number[]>([]);
   const [timePeriods, setTimePeriods] = useState<number[]>([]);
   const [originationFeeses, setOriginationFeeses] = useState<number[]>([]);
-  const [selectedPackage, setSelectedPackage] = useState<Ipackage | null>();
+  const [selectedPackage, setSelectedPackage] = useState<IIisoPackage | null>();
 
   // Initial Frequency
   useEffect(() => {
@@ -171,6 +176,13 @@ export default function Offer() {
       case "Daily":
         return "Days";
     }
+  };
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const handleSelectOffer = () => {
+    dispatch(setCustomerSelectedPackage(selectedPackage));
+    dispatch(setAllCustomerPackages(packages));
+    router.push("/customer/submit-offer");
   };
 
   return (
@@ -403,7 +415,10 @@ export default function Offer() {
                 </p>
               </div>
             </div>
-            <button className="text-sm bg-secondary rounded-full p-2 font-semibold hover:bg-secondary/80">
+            <button
+              onClick={handleSelectOffer}
+              className="text-sm bg-secondary rounded-full p-2 font-semibold hover:bg-secondary/80"
+            >
               Select This Offer
             </button>
           </div>

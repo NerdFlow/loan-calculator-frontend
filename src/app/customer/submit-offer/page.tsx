@@ -1,13 +1,122 @@
+"use client";
 import ChooseFile from "@/app/components/ChooseFile";
 import ProgressSliderBar from "@/app/components/ProgressSliderBar";
 import DocumentsSelection from "./components/DocumentsSelection";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+import { useEffect, useState } from "react";
 
 export default function SubmitOffer() {
+  const router = useRouter();
+  const { selectedPackage, packages } = useSelector(
+    (state: RootState) => state.offer
+  );
+  //states
+  const [userOfferData, setUserOfferData] = useState({
+    loan: {
+      min: "",
+      max: "",
+    },
+    term: {
+      min: "",
+      max: "",
+    },
+    net_funding: {
+      min: "",
+      max: "",
+    },
+    origination: {
+      min: "",
+      max: "",
+    },
+  });
+
+  useEffect(() => {
+    if (!packages || packages.length === 0) return;
+
+    // Find min and max loan amounts
+    const minLoan = packages.reduce((acc, v) =>
+      parseInt(v.loan_amount) < parseInt(acc.loan_amount) ? v : acc
+    ).loan_amount;
+    const maxLoan = packages.reduce((acc, v) =>
+      parseInt(v.loan_amount) > parseInt(acc.loan_amount) ? v : acc
+    ).loan_amount;
+
+    // Find min and max terms
+    const minTerm = packages.reduce((acc, v) =>
+      parseInt(v.time) < parseInt(acc.time) ? v : acc
+    ).time;
+    const maxTerm = packages.reduce((acc, v) =>
+      parseInt(v.time) > parseInt(acc.time) ? v : acc
+    ).time;
+
+    // Find min and max net funding amounts
+    const minFund = packages.reduce((acc, v) =>
+      parseInt(v.net_funding_amount) < parseInt(acc.net_funding_amount)
+        ? v
+        : acc
+    ).net_funding_amount;
+    const maxFund = packages.reduce((acc, v) =>
+      parseInt(v.net_funding_amount) > parseInt(acc.net_funding_amount)
+        ? v
+        : acc
+    ).net_funding_amount;
+
+    // Find min and max origination fees
+    const minOrigination = packages.reduce((acc, v) =>
+      parseInt(v.origination_fee) < parseInt(acc.origination_fee) ? v : acc
+    ).origination_fee;
+    const maxOrigination = packages.reduce((acc, v) =>
+      parseInt(v.origination_fee) > parseInt(acc.origination_fee) ? v : acc
+    ).origination_fee;
+
+    // Update the state with the computed values
+    setUserOfferData({
+      loan: {
+        min: minLoan,
+        max: maxLoan,
+      },
+      term: {
+        min: minTerm,
+        max: maxTerm,
+      },
+      net_funding: {
+        min: minFund,
+        max: maxFund,
+      },
+      origination: {
+        min: minOrigination,
+        max: maxOrigination,
+      },
+    });
+  }, [packages]);
+
+  //handlers
+  const handleBack = () => {
+    router.back();
+  };
+
+  const frequencyUnit = (frequency: string) => {
+    switch (frequency) {
+      case "Monthly":
+      case "Bi-Monthly":
+        return "Months";
+      case "Weekly":
+        return "Weeks";
+      case "Daily":
+        return "Days";
+    }
+  };
+
   return (
     <section className="p-4 mt-10 flex flex-col gap-4">
       {/* topbar */}
       <div className="flex items-center gap-5">
-        <button className="border-gray-200 border-2 p-4 bg-white shadow-sm rounded-md">
+        <button
+          onClick={handleBack}
+          className="border-gray-200 border-2 p-4 bg-white shadow-sm rounded-md"
+        >
           <svg
             width="10"
             height="18"
@@ -16,8 +125,8 @@ export default function SubmitOffer() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M0.555607 9.53033C0.262714 9.23744 0.262714 8.76256 0.555607 8.46967L8.05561 0.96967C8.3485 0.676777 8.82337 0.676777 9.11627 0.96967C9.40916 1.26256 9.40916 1.73744 9.11627 2.03033L2.1466 9L9.11627 15.9697C9.40916 16.2626 9.40916 16.7374 9.11627 17.0303C8.82337 17.3232 8.3485 17.3232 8.05561 17.0303L0.555607 9.53033Z"
               fill="#383A3D"
             />
@@ -30,10 +139,16 @@ export default function SubmitOffer() {
         <div className="flex flex-wrap justify-between">
           <div className="">
             <p>Loan Amount</p>
-            <p className="font-semibold text-xl text-secondary">$200,000</p>
+            <p className="font-semibold text-xl text-secondary">
+              {selectedPackage?.loan_amount}
+            </p>
           </div>
           <div className="flex-grow flex justify-end items-center w-[80%] max-w-[600px]">
-            <ProgressSliderBar value={200000} />
+            <ProgressSliderBar
+              min={parseInt(userOfferData.loan.min)}
+              max={parseInt(userOfferData.loan.max)}
+              value={parseInt(selectedPackage?.loan_amount + "")}
+            />
           </div>
         </div>
         <div className=" bg-[rgba(249, 251, 250, 1)]  bg-gray-400/15 rounded-md">
@@ -88,11 +203,17 @@ export default function SubmitOffer() {
         <div className="col-span-12 sm:col-span-6 bg-white rounded-lg p-4 border-gray-200 border-2">
           <div className="flex flex-col">
             <div className="">
-              <p>Loan Amount</p>
-              <p className="font-semibold text-xl text-secondary">$200,000</p>
+              <p>Net Funding Amount</p>
+              <p className="font-semibold text-xl text-secondary">
+                $ {selectedPackage?.net_funding_amount}
+              </p>
             </div>
             <div className="flex-grow flex justify-end items-center mb-4">
-              <ProgressSliderBar value={200000} />
+              <ProgressSliderBar
+                value={parseInt(selectedPackage?.net_funding_amount + "")}
+                min={parseInt(userOfferData.net_funding.min)}
+                max={parseInt(userOfferData.net_funding.max)}
+              />
             </div>
           </div>
         </div>
@@ -100,11 +221,20 @@ export default function SubmitOffer() {
         <div className="col-span-12 sm:col-span-6 bg-white rounded-lg p-4 border-gray-200 border-2">
           <div className="flex flex-col">
             <div className="">
-              <p>Loan Amount</p>
-              <p className="font-semibold text-xl text-secondary">$200,000</p>
+              <p>
+                Term ( {frequencyUnit(selectedPackage?.payment_frequency ?? "")}{" "}
+                )
+              </p>
+              <p className="font-semibold text-xl text-secondary">
+                {selectedPackage?.time}
+              </p>
             </div>
             <div className="flex-grow flex justify-end items-center mb-4">
-              <ProgressSliderBar value={200000} />
+              <ProgressSliderBar
+                value={parseInt(selectedPackage?.time + "")}
+                min={parseInt(userOfferData.term.min)}
+                max={parseInt(userOfferData.term.max)}
+              />
             </div>
           </div>
         </div>
@@ -112,11 +242,17 @@ export default function SubmitOffer() {
         <div className="col-span-12 sm:col-span-6 bg-white rounded-lg p-4 border-gray-200 border-2">
           <div className="flex flex-col">
             <div className="">
-              <p>Loan Amount</p>
-              <p className="font-semibold text-xl text-secondary">$200,000</p>
+              <p>Origination Fee</p>
+              <p className="font-semibold text-xl text-secondary">
+                {selectedPackage?.origination_fee}
+              </p>
             </div>
             <div className="flex-grow flex justify-end items-center mb-4">
-              <ProgressSliderBar value={200000} />
+              <ProgressSliderBar
+                value={parseInt(selectedPackage?.origination_fee + "")}
+                min={parseInt(userOfferData.origination.min)}
+                max={parseInt(userOfferData.origination.max)}
+              />
             </div>
           </div>
         </div>

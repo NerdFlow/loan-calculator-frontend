@@ -1,9 +1,13 @@
+import { IIisoPackage } from "@/app/customer/offer/[id]/page";
 import { createSlice } from "@reduxjs/toolkit";
 
 // setting up the initial state
-const initialState = {
-  customer: {},
-  selectedPackage: {},
+const initialState: {
+  selectedPackage: IIisoPackage | null;
+  packages: IIisoPackage[];
+} = {
+  selectedPackage: null,
+  packages: [],
 };
 
 // creating the authentication slice and reducer functions
@@ -11,15 +15,16 @@ const offerSlice = createSlice({
   name: "offer",
   initialState,
   reducers: {
-    setCustomer: (state, action) => {
-      state.customer = action.payload;
-    },
     // set customer selected package
     setCustomerSelectedPackage: (state, action) => {
       state.selectedPackage = action.payload;
     },
+    setAllCustomerPackages: (state, action) => {
+      state.packages = action.payload;
+    },
   },
 });
 
-export const { setCustomer, setCustomerSelectedPackage } = offerSlice.actions;
+export const { setAllCustomerPackages, setCustomerSelectedPackage } =
+  offerSlice.actions;
 export default offerSlice.reducer;
