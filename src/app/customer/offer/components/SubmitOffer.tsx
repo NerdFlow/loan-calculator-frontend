@@ -344,8 +344,8 @@ export default function SubmitOffer({
             <div className="flex flex-col">
               <div className="">
                 <p>
-                  Term ({" "}
-                  {frequencyUnit(selectedPackage?.payment_frequency ?? "")} )
+                  Term (
+                  {frequencyUnit(selectedPackage?.payment_frequency ?? "")})
                 </p>
                 <p className="font-semibold text-xl text-secondary">
                   {selectedPackage?.time}
