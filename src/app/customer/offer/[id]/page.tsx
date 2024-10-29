@@ -39,6 +39,9 @@ export default function Offer() {
   const { data: customerPackages, isLoading } =
     useGetCustomerIsoPackagesQuery(id);
 
+  //State
+  const [isPackageSelected, setIsPackageSelected] = useState<boolean>(false);
+
   useEffect(() => {
     if (!customerPackages?.data?.packages) return;
     setPackages(customerPackages?.data?.packages);
@@ -64,10 +67,6 @@ export default function Offer() {
   const [timePeriods, setTimePeriods] = useState<number[]>([]);
   const [originationFeeses, setOriginationFeeses] = useState<number[]>([]);
   const [selectedPackage, setSelectedPackage] = useState<IIisoPackage | null>();
-
-  const { selectedPackage: submittedSelectedPackage } = useSelector(
-    (state: RootState) => state.offer
-  );
 
   // Initial Frequency
   useEffect(() => {
@@ -189,14 +188,18 @@ export default function Offer() {
   const handleSelectOffer = () => {
     dispatch(setCustomerSelectedPackage(selectedPackage));
     dispatch(setAllCustomerPackages(packages));
+    setIsPackageSelected(true);
   };
 
-  if (!customerPackages?.success && !isLoading) return <AlreadySubmitted />;
+  const [isPackageSubmitted, setIsPackageSubmitted] = useState<boolean>(false);
+
+  if ((!customerPackages?.success && !isLoading) || isPackageSubmitted)
+    return <AlreadySubmitted />;
 
   return (
     <>
       {isLoading && <OverlayLoader />}
-      {submittedSelectedPackage == null ? (
+      {!isPackageSelected ? (
         <div className="mx-8 mt-8">
           <header className="flex flex-wrap gap-10 justify-between items-center">
             <div className="flex gap-3 items-center self-stretch my-auto">
@@ -219,7 +222,7 @@ export default function Offer() {
                     Merchant:
                   </div>
                   <div className="text-black text-base font-normal font-montserrat leading-tight">
-                    Private limited
+                    {customerPackages?.data?.name}
                   </div>
                 </div>
                 {/* Term Section */}
@@ -397,7 +400,11 @@ export default function Offer() {
               <div className="flex gap-2 flex-col ">
                 <div className="font-inter flex justify-between">
                   <p>Factor</p>
-                  <p>{selectedPackage && selectedPackage.factor}</p>
+                  <p>{selectedPackage && selectedPackage.factor}%</p>
+                </div>
+                <div className="font-inter flex justify-between">
+                  <p>Buy Rate</p>
+                  <p>${selectedPackage && selectedPackage.buy_rate}</p>
                 </div>
                 <div className="font-inter flex justify-between">
                   <p>Payment</p>
@@ -406,10 +413,6 @@ export default function Offer() {
               </div>
               <div className="border-white/25 border-t flex flex-col py-3 gap-2 ">
                 <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
-                  <p>Payment</p>
-                  <p className="font-semibold">$30,10.70</p>
-                </div>
-                <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                   <p>Term</p>
                   <p className="font-semibold">
                     {timePeriod} {frequencyUnit()}
@@ -417,12 +420,12 @@ export default function Offer() {
                 </div>
                 <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                   <p>Origination Fee</p>
-                  <p className="font-semibold">$ {originationFee}</p>
+                  <p className="font-semibold">${originationFee}</p>
                 </div>
                 <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                   <p>Net Funding Amount</p>
                   <p className="font-semibold">
-                    $ {selectedPackage?.net_funding_amount}
+                    ${selectedPackage?.net_funding_amount}
                   </p>
                 </div>
               </div>
@@ -436,7 +439,14 @@ export default function Offer() {
           </div>
         </div>
       ) : (
-        <SubmitOffer />
+        <SubmitOffer
+          handleBackToPackageSelection={() => {
+            setIsPackageSelected(false);
+          }}
+          handleExpireLink={() => {
+            setIsPackageSubmitted(true);
+          }}
+        />
       )}
     </>
   );

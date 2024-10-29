@@ -12,7 +12,13 @@ import * as Yup from "yup";
 import { useSelectPackageMutation } from "@/lib/slices/offer/offerApiSlice";
 import { toast } from "react-toastify";
 
-export default function SubmitOffer() {
+export default function SubmitOffer({
+  handleBackToPackageSelection,
+  handleExpireLink,
+}: {
+  handleBackToPackageSelection: () => void;
+  handleExpireLink: () => void;
+}) {
   const router = useRouter();
   const { selectedPackage, packages } = useSelector(
     (state: RootState) => state.offer
@@ -101,7 +107,7 @@ export default function SubmitOffer() {
 
   //handlers
   const handleBack = () => {
-    router.back();
+    handleBackToPackageSelection();
   };
 
   const validation = useFormik({
@@ -147,6 +153,7 @@ export default function SubmitOffer() {
         .then((response) => {
           if (response.success) {
             toast.success(response.message);
+            handleExpireLink();
           } else {
             toast.error(response.message);
           }
@@ -190,6 +197,7 @@ export default function SubmitOffer() {
         {/* topbar */}
         <div className="flex items-center gap-5">
           <button
+            type="button"
             onClick={handleBack}
             className="border-gray-200 border-2 p-4 bg-white shadow-sm rounded-md"
           >
@@ -224,6 +232,7 @@ export default function SubmitOffer() {
                 min={parseInt(userOfferData.loan.min)}
                 max={parseInt(userOfferData.loan.max)}
                 value={parseInt(selectedPackage?.loan_amount + "")}
+                isAmount
               />
             </div>
           </div>
@@ -317,7 +326,7 @@ export default function SubmitOffer() {
               <div className="">
                 <p>Net Funding Amount</p>
                 <p className="font-semibold text-xl text-secondary">
-                  $ {selectedPackage?.net_funding_amount}
+                  ${selectedPackage?.net_funding_amount}
                 </p>
               </div>
               <div className="flex-grow flex justify-end items-center mb-4">
@@ -325,6 +334,7 @@ export default function SubmitOffer() {
                   value={parseInt(selectedPackage?.net_funding_amount + "")}
                   min={parseInt(userOfferData.net_funding.min)}
                   max={parseInt(userOfferData.net_funding.max)}
+                  isAmount
                 />
               </div>
             </div>
@@ -364,6 +374,7 @@ export default function SubmitOffer() {
                   value={parseInt(selectedPackage?.origination_fee + "")}
                   min={parseInt(userOfferData.origination.min)}
                   max={parseInt(userOfferData.origination.max)}
+                  isAmount
                 />
               </div>
             </div>

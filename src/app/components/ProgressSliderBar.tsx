@@ -4,10 +4,12 @@ const ProgressSliderBar = ({
   value,
   min,
   max,
+  isAmount,
 }: {
   value: number;
   min: number;
   max: number;
+  isAmount?: boolean;
 }) => {
   // Calculate the percentage of progress based on the range (min to max)
   let progress = 0;
@@ -27,7 +29,10 @@ const ProgressSliderBar = ({
 
   return (
     <div className="w-full relative">
-      <p className="absolute left-0 -bottom-[15px] text-sm">{min}$</p>
+      <p className="absolute left-0 -bottom-[15px] text-sm">
+        {isAmount && "$"}
+        {min}
+      </p>
       <div className="relative h-[6px] bg-[#EEEEEE] rounded-lg mb-5">
         {/* Fill based on value */}
         <div
@@ -37,7 +42,10 @@ const ProgressSliderBar = ({
           }}
         />
       </div>
-      <p className="absolute right-0 -bottom-[15px] text-sm">{max}$</p>
+      <p className="absolute right-0 -bottom-[15px] text-sm">
+        {isAmount && "$"}
+        {max}
+      </p>
     </div>
   );
 };
