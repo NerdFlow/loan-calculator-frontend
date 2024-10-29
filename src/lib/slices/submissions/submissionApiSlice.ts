@@ -27,12 +27,19 @@ export const submissionApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Submissions"],
     }),
+    // function for getting submissions count
+    submissionCount: builder.query({
+      query: () => ({
+        url: "/customer/submissions/count",
+      }),
+    }),
   }),
 });
 
 // exporint the functions from iso api slice
 export const {
   useGetSubmissionsQuery,
+  useSubmissionCountQuery,
   useDeleteSubmissionMutation,
   useDownloadSubmissionDocumentMutation,
 } = submissionApiSlice;
