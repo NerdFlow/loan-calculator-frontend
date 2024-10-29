@@ -46,6 +46,97 @@ export default function Submission() {
       });
   }
 
+  const SubmissionTableBody = ({ row, index }: { row: any; index: number }) => {
+    return (
+      <>
+        <tr key={row.id}>
+          {/* Customer Name */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              {row.name}
+            </div>
+          </td>
+
+          {/* Loan Amount */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              {row.selected_package.loan_amount}
+            </div>
+          </td>
+          {/* Frequency */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              {row.selected_package.payment_frequency}
+            </div>
+          </td>
+          {/* Time (Months) */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              {row.selected_package.time}
+            </div>
+          </td>
+
+          {/* Commission */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              {row.selected_package.commission}
+            </div>
+          </td>
+
+          {/* Origination Fee */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              {row.selected_package.origination_fee}
+            </div>
+          </td>
+
+          {/* Factor */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              {row.selected_package.factor}
+            </div>
+          </td>
+
+          {/* Payment */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              {row.selected_package.payment}
+            </div>
+          </td>
+
+          {/* Actions */}
+          <td className="py-6 px-3 flex gap-2 items-center">
+            <button>
+              <Image
+                src={documentIcon}
+                alt="Delete"
+                className="w-5 h-5 cursor-pointer"
+                onClick={() => handleSubmissionView(row)}
+              />
+            </button>
+            <button>
+              <Image
+                onClick={() => {
+                  deleteSubmissionAction(row.id);
+                }}
+                src={trashIcon}
+                alt="Delete"
+                className="w-5 h-5 cursor-pointer"
+              />
+            </button>
+          </td>
+        </tr>
+        {index < submissions.length - 1 && (
+          <tr>
+            <td colSpan={8} className="p-0">
+              <hr className="border-t border-gray-300" />
+            </td>
+          </tr>
+        )}
+      </>
+    );
+  };
+
   return (
     <>
       {isLoading ? (
@@ -105,92 +196,7 @@ export default function Submission() {
                 {/* Table Body */}
                 <tbody>
                   {submissions?.data?.map((row: any, index: number) => (
-                    <>
-                      <tr key={row.id}>
-                        {/* Customer Name */}
-                        <td className="py-6 px-3">
-                          <div className="text-neutral-700 px-3 font-medium font-raleway">
-                            {row.name}
-                          </div>
-                        </td>
-
-                        {/* Loan Amount */}
-                        <td className="py-6 px-3">
-                          <div className="text-neutral-700 px-3 font-medium font-raleway">
-                            {row.selected_package.loan_amount}
-                          </div>
-                        </td>
-                        {/* Frequency */}
-                        <td className="py-6 px-3">
-                          <div className="text-neutral-700 px-3 font-medium font-raleway">
-                            {row.selected_package.payment_frequency}
-                          </div>
-                        </td>
-                        {/* Time (Months) */}
-                        <td className="py-6 px-3">
-                          <div className="text-neutral-700 px-3 font-medium font-raleway">
-                            {row.selected_package.time}
-                          </div>
-                        </td>
-
-                        {/* Commission */}
-                        <td className="py-6 px-3">
-                          <div className="text-neutral-700 px-3 font-medium font-raleway">
-                            {row.selected_package.commission}
-                          </div>
-                        </td>
-
-                        {/* Origination Fee */}
-                        <td className="py-6 px-3">
-                          <div className="text-neutral-700 px-3 font-medium font-raleway">
-                            {row.selected_package.origination_fee}
-                          </div>
-                        </td>
-
-                        {/* Factor */}
-                        <td className="py-6 px-3">
-                          <div className="text-neutral-700 px-3 font-medium font-raleway">
-                            {row.selected_package.factor}
-                          </div>
-                        </td>
-
-                        {/* Payment */}
-                        <td className="py-6 px-3">
-                          <div className="text-neutral-700 px-3 font-medium font-raleway">
-                            {row.selected_package.payment}
-                          </div>
-                        </td>
-
-                        {/* Actions */}
-                        <td className="py-6 px-3 flex gap-2 items-center">
-                          <button>
-                            <Image
-                              src={documentIcon}
-                              alt="Delete"
-                              className="w-5 h-5 cursor-pointer"
-                              onClick={() => handleSubmissionView(row)}
-                            />
-                          </button>
-                          <button>
-                            <Image
-                              onClick={() => {
-                                deleteSubmissionAction(row.id);
-                              }}
-                              src={trashIcon}
-                              alt="Delete"
-                              className="w-5 h-5 cursor-pointer"
-                            />
-                          </button>
-                        </td>
-                      </tr>
-                      {index < submissions.length - 1 && (
-                        <tr>
-                          <td colSpan={8} className="p-0">
-                            <hr className="border-t border-gray-300" />
-                          </td>
-                        </tr>
-                      )}
-                    </>
+                    <SubmissionTableBody key={index} row={row} index={index} />
                   ))}
                 </tbody>
               </table>

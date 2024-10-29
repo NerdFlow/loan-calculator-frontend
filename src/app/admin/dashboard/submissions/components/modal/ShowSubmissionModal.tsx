@@ -7,6 +7,7 @@ import xIcon from "@/app/assets/icons/icon-x-mark-large-solid.png";
 import { Submission } from "@/app/interfaces/Submission/Submission.interface";
 import { useDeleteSubmissionMutation } from "@/lib/slices/submissions/submissionApiSlice";
 import { toast } from "react-toastify";
+import SubmissionDocument from "../SubmissionDocument";
 
 interface ShowSubmissionProps {
   isModelOpen: boolean;
@@ -36,6 +37,11 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
         toast.success(response?.success);
       });
   }
+
+  const getFileName = (filePath: string) => {
+    if (!filePath) return "";
+    return filePath.split("/").pop()?.split(/-(.+)/)[1] || "";
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -152,117 +158,33 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
         </div>
         <div className="self-stretch h-[200px] px-6 pt-6 pb-4 bg-[#f9fbfa] rounded-lg border border-[#e1e2e1] flex-col justify-start items-center gap-4 flex">
           <div className="self-stretch justify-start items-start gap-6 inline-flex">
-            <div className="grow shrink basis-0 flex-col justify-start items-start gap-6 inline-flex">
-              <div className="self-stretch h-[68px] flex-col justify-start items-start gap-3 flex">
-                <div className="text-black text-base font-medium  font-raleway leading-tight">
-                  Driver’s License
-                </div>
-                <div className="self-stretch h-9 px-3 py-1.5 bg-white rounded-md border border-[#efefef] justify-center items-center gap-2.5 inline-flex">
-                  <Image
-                    src={fileIcon}
-                    width={18}
-                    height={18}
-                    alt="file icon"
-                  />
-                  <div className="h-[18px] relative" />
-                  <div className="grow shrink basis-0 h-6 justify-start items-center gap-0.5 flex">
-                    <div className="text-[#394560] text-xs font-normal font-['Inter'] leading-normal">
-                      Driver’s License.pdf
-                    </div>
-                  </div>
-                  <div className="h-3.5 relative" />
-                  <Image
-                    src={downloadIcon}
-                    className="cursor-pointer"
-                    width={14}
-                    height={14}
-                    alt="download icon"
-                  />
-                </div>
-              </div>
-              <div className="self-stretch h-[68px] flex-col justify-start items-start gap-3 flex">
-                <div className="text-black text-base font-medium  font-raleway leading-tight">
-                  Proof of ownership
-                </div>
-                <div className="self-stretch h-9 px-3 py-1.5 bg-white rounded-md border border-[#efefef] justify-center items-center gap-2.5 inline-flex">
-                  <Image
-                    src={fileIcon}
-                    width={18}
-                    height={18}
-                    alt="file icon"
-                  />
-                  <div className="h-[18px] relative" />
-                  <div className="grow shrink basis-0 h-6 justify-start items-center gap-0.5 flex">
-                    <div className="text-[#394560] text-xs font-normal font-['Inter'] leading-normal">
-                      Proof of ownership.pdf
-                    </div>
-                  </div>
-                  <div className="h-3.5 relative" />
-                  <Image
-                    src={downloadIcon}
-                    className="cursor-pointer"
-                    width={14}
-                    height={14}
-                    alt="download icon"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="grow shrink basis-0 flex-col justify-start items-start gap-6 inline-flex">
-              <div className="self-stretch h-[68px] flex-col justify-start items-start gap-3 flex">
-                <div className="text-black text-base font-medium  font-raleway leading-tight">
-                  Voided Check
-                </div>
-                <div className="self-stretch h-9 px-3 py-1.5 bg-white rounded-md border border-[#efefef] justify-center items-center gap-2.5 inline-flex">
-                  <Image
-                    src={fileIcon}
-                    width={18}
-                    height={18}
-                    alt="file icon"
-                  />
-                  <div className="h-[18px] relative" />
-                  <div className="grow shrink basis-0 h-6 justify-start items-center gap-0.5 flex">
-                    <div className="text-[#394560] text-xs font-normal font-['Inter'] leading-normal">
-                      Voided Check.pdf
-                    </div>
-                  </div>
-                  <div className="h-3.5 relative" />
-                  <Image
-                    src={downloadIcon}
-                    className="cursor-pointer"
-                    width={14}
-                    height={14}
-                    alt="download icon"
-                  />
-                </div>
-              </div>
-              <div className="self-stretch h-[68px] flex-col justify-start items-start gap-3 flex">
-                <div className="text-black text-base font-medium  font-raleway leading-tight">
-                  A/R or Credit Card Processing Statement
-                </div>
-                <div className="self-stretch h-9 px-3 py-1.5 bg-white rounded-md border border-[#efefef] justify-center items-center gap-2.5 inline-flex">
-                  <Image
-                    src={fileIcon}
-                    width={18}
-                    height={18}
-                    alt="file icon"
-                  />
-                  <div className="h-[18px] relative" />
-                  <div className="grow shrink basis-0 h-6 justify-start items-center gap-0.5 flex">
-                    <div className="text-[#394560] text-xs font-normal font-['Inter'] leading-normal">
-                      A/R or Credit Card Processing Statement.pdf
-                    </div>
-                  </div>
-                  <div className="h-3.5 relative" />
-                  <Image
-                    src={downloadIcon}
-                    className="cursor-pointer"
-                    width={14}
-                    height={14}
-                    alt="download icon"
-                  />
-                </div>
-              </div>
+            <div className="flex flex-wrap gap-6 ">
+              <SubmissionDocument
+                document_name="driver_license"
+                customerId={submission.selected_package.customer_id}
+                name="Driver's License"
+                fileName={getFileName(submission.driver_license)}
+              />
+              <SubmissionDocument
+                document_name="voided_check"
+                customerId={submission.selected_package.customer_id}
+                name="Voided Check"
+                fileName={getFileName(submission.voided_check)}
+              />
+              <SubmissionDocument
+                document_name="proof_of_ownership"
+                customerId={submission.selected_package.customer_id}
+                name="Proof of ownership"
+                fileName={getFileName(submission.proof_of_ownership)}
+              />
+              <SubmissionDocument
+                document_name="credit_card_processing_statement"
+                customerId={submission.selected_package.customer_id}
+                name="A/R or Credit Card Processing Statement"
+                fileName={getFileName(
+                  submission.credit_card_processing_statement
+                )}
+              />
             </div>
           </div>
         </div>

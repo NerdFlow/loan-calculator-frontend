@@ -16,9 +16,23 @@ export const submissionApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Submissions"],
     }),
+    downloadSubmissionDocument: builder.mutation({
+      query: ({ customer_id, document_name }) => ({
+        url: `/customer/submissions/download/document`,
+        method: "POST",
+        body: {
+          customer_id,
+          document_name,
+        },
+      }),
+      invalidatesTags: ["Submissions"],
+    }),
   }),
 });
 
 // exporint the functions from iso api slice
-export const { useGetSubmissionsQuery, useDeleteSubmissionMutation } =
-  submissionApiSlice;
+export const {
+  useGetSubmissionsQuery,
+  useDeleteSubmissionMutation,
+  useDownloadSubmissionDocumentMutation,
+} = submissionApiSlice;

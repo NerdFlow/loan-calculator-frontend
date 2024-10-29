@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
+import { backendAddressUrl } from "@/app/config/address";
 
 // setting the base url domain for apis
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://ccs.nerdflow.tech/api",
+  baseUrl: backendAddressUrl,
   prepareHeaders: (headers, { getState }) => {
     // Access the auth state to retrieve the token
     const token = (getState() as RootState).auth?.userInfo?.token;
