@@ -16,7 +16,11 @@ export default function Dashboard() {
           title="View submission"
           description="Login provides secure access to personalized accounts by verifying
               user credentials"
-          badgeCount={submissionCount?.submission_count}
+          badgeCount={
+            submissionCount?.submission_count > 0
+              ? submissionCount.submission_count
+              : undefined
+          }
           route="/admin/dashboard/submissions"
         />
 
