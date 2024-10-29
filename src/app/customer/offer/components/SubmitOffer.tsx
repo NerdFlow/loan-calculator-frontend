@@ -366,7 +366,7 @@ export default function SubmitOffer({
               <div className="">
                 <p>Origination Fee</p>
                 <p className="font-semibold text-xl text-secondary">
-                  {selectedPackage?.origination_fee}
+                  ${selectedPackage?.origination_fee}
                 </p>
               </div>
               <div className="flex-grow flex justify-end items-center mb-4">
