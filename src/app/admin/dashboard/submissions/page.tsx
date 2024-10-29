@@ -60,7 +60,7 @@ export default function Submission() {
           {/* Loan Amount */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
-              {row.selected_package.loan_amount}
+              ${row.selected_package.loan_amount}
             </div>
           </td>
           {/* Frequency */}
@@ -79,28 +79,28 @@ export default function Submission() {
           {/* Commission */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
-              {row.selected_package.commission}
+              {row.selected_package.commission}%
             </div>
           </td>
 
           {/* Origination Fee */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
-              {row.selected_package.origination_fee}
+              ${row.selected_package.origination_fee}
             </div>
           </td>
 
           {/* Factor */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
-              {row.selected_package.factor}
+              {row.selected_package.factor}%
             </div>
           </td>
 
           {/* Payment */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
-              {row.selected_package.payment}
+              ${row.selected_package.payment}
             </div>
           </td>
 
