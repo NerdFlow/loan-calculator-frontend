@@ -234,7 +234,9 @@ export default function Offer() {
                       onChange={handleFrequencyChange}
                       className="w-32 h-8 border-gray-300 rounded-md"
                     >
-                      <option value="">Select</option>
+                      <option hidden value="">
+                        Select
+                      </option>
                       {frequencies &&
                         frequencies.map((frequency, index) => {
                           return (

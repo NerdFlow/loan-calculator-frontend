@@ -138,6 +138,7 @@ export default function ISOInterface() {
             </label>
             <input
               type="text"
+              disabled={sharingLink ? true : false}
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
               placeholder="Enter customer name"
@@ -202,6 +203,7 @@ export default function ISOInterface() {
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
                           type="number"
+                          disabled={sharingLink ? true : false}
                           placeholder="$50,000"
                           className="flex-1 w-20 font-raleway focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.loan_amount}
@@ -227,6 +229,7 @@ export default function ISOInterface() {
                         <select
                           className="w-full border-none outline-none"
                           value={row.payment_frequency}
+                          disabled={sharingLink ? true : false}
                           onChange={(e) =>
                             handleRowChange(
                               row.id,
@@ -249,6 +252,7 @@ export default function ISOInterface() {
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
                           type="number"
+                          disabled={sharingLink ? true : false}
                           // placeholder="$50,000"
                           className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.time}
@@ -264,6 +268,7 @@ export default function ISOInterface() {
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
                           type="number"
+                          disabled={sharingLink ? true : false}
                           placeholder="2.5"
                           className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.commission}
@@ -288,6 +293,7 @@ export default function ISOInterface() {
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
                           type="number"
+                          disabled={sharingLink ? true : false}
                           placeholder="$50,000"
                           className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.origination_fee}
@@ -312,6 +318,7 @@ export default function ISOInterface() {
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
                           type="number"
+                          disabled={sharingLink ? true : false}
                           placeholder="$50,000"
                           className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.net_funding_amount}
@@ -336,6 +343,7 @@ export default function ISOInterface() {
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
                           type="number"
+                          disabled={sharingLink ? true : false}
                           placeholder="1.2"
                           className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.factor}
@@ -351,6 +359,7 @@ export default function ISOInterface() {
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
                           type="number"
+                          disabled={sharingLink ? true : false}
                           placeholder="$50,000"
                           className="flex-1  font-raleway  w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.buy_rate}
@@ -371,6 +380,7 @@ export default function ISOInterface() {
                       <div className="flex gap-2.5 items-center pr-2 pl-3 font-medium tracking-tight bg-white rounded-md border border-neutral-200 min-h-[44px] text-neutral-700">
                         <input
                           type="number"
+                          disabled={sharingLink ? true : false}
                           placeholder="$50,000"
                           className="flex-1  font-raleway w-20 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           value={row.payment}
