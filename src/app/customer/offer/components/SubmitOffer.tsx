@@ -224,7 +224,7 @@ export default function SubmitOffer({
             <div className="">
               <p>Loan Amount</p>
               <p className="font-semibold text-xl text-secondary">
-                {selectedPackage?.loan_amount}
+                ${selectedPackage?.loan_amount}
               </p>
             </div>
             <div className="flex-grow flex justify-end items-center w-[80%] max-w-[600px]">
