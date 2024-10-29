@@ -351,6 +351,11 @@ export default function ISOInterface() {
                             handleRowChange(row.id, "factor", e.target.value)
                           }
                         />
+                        <Image
+                          src={percenticon}
+                          alt="percent-icon"
+                          className="w-6 h-6"
+                        />
                       </div>
                     </td>
 
