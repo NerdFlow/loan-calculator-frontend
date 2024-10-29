@@ -37,7 +37,7 @@ const MenuCard: React.FC<MenuCard> = ({
           <div className="text-black text-[26px] font-bold font-montserrat leading-tight">
             {title}
           </div>
-          {badgeCount && (
+          {badgeCount && badgeCount > 0 && (
             <div className="self-stretch px-[7px] bg-[#2e6fac]/20 rounded justify-center items-center flex">
               <div className="text-[#2e6fac] text-base font-bold font-montserrat">
                 {badgeCount}
