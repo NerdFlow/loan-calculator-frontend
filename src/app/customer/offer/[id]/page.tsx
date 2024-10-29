@@ -39,8 +39,6 @@ export default function Offer() {
   const { data: customerPackages, isLoading } =
     useGetCustomerIsoPackagesQuery(id);
 
-  if (!customerPackages?.success) return <AlreadySubmitted />;
-
   useEffect(() => {
     if (!customerPackages?.data?.packages) return;
     setPackages(customerPackages?.data?.packages);
@@ -192,6 +190,8 @@ export default function Offer() {
     dispatch(setCustomerSelectedPackage(selectedPackage));
     dispatch(setAllCustomerPackages(packages));
   };
+
+  if (!customerPackages?.success && !isLoading) return <AlreadySubmitted />;
 
   return (
     <>
