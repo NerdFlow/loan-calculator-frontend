@@ -403,10 +403,6 @@ export default function Offer() {
                   <p>{selectedPackage && selectedPackage.factor}%</p>
                 </div>
                 <div className="font-inter flex justify-between">
-                  <p>Buy Rate</p>
-                  <p>${selectedPackage && selectedPackage.buy_rate}</p>
-                </div>
-                <div className="font-inter flex justify-between">
                   <p>Payment</p>
                   <p>${selectedPackage && selectedPackage.payment}</p>
                 </div>
