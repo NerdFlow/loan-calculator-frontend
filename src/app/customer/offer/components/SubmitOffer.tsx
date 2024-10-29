@@ -381,7 +381,7 @@ export default function SubmitOffer({
           </div>
           <div className="col-span-12 sm:col-span-6 g rounded-lg p-4  flex items-end justify-end gap-3">
             <button
-              onClick={() => {}}
+              onClick={handleBack}
               className="text-sm uppercase  bg-white rounded-full p-2 font-semibold hover:bg-white/80 border-gray-200 border-2 flex basis-28 justify-center"
             >
               Cancel
