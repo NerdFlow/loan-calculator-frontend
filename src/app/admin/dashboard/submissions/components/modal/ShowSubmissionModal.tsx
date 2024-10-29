@@ -71,7 +71,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
                 Loan Amount
               </div>
               <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
-                {submission.selected_package.loan_amount}
+                ${submission.selected_package.loan_amount}
               </div>
             </div>
             <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
@@ -92,7 +92,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  {submission.selected_package.commission}
+                  {submission.selected_package.commission}%
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
                 Origination Fees
               </div>
               <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
-                {submission.selected_package.origination_fee}
+                ${submission.selected_package.origination_fee}
               </div>
             </div>
           </div>
@@ -113,7 +113,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
                 Factor
               </div>
               <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
-                {submission.selected_package.factor}
+                {submission.selected_package.factor}%
               </div>
             </div>
             <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
@@ -122,7 +122,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  {submission.selected_package.payment}
+                  %{submission.selected_package.payment}
                 </div>
               </div>
             </div>
@@ -134,7 +134,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  {submission.selected_package.buy_rate}
+                  ${submission.selected_package.buy_rate}
                 </div>
               </div>
             </div>
