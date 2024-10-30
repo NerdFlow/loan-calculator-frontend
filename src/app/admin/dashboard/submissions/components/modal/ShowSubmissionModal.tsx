@@ -45,7 +45,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="w-[836px] h-[456px] p-6 bg-white rounded-lg shadow flex-col justify-start items-start gap-6 inline-flex">
+      <div className="w-[836px] h-[545px] p-6 bg-white rounded-lg shadow flex-col justify-start items-start gap-6 inline-flex">
         <div className="self-stretch justify-between items-center inline-flex">
           <div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
             <div className="w-[92px] text-black text-sm font-normal font-raleway">
@@ -88,11 +88,11 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
           <div className="grow shrink basis-0 h-[43px] justify-start items-start gap-12 flex">
             <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
               <div className="text-black text-xs font-normal  font-montserrat leading-tight">
-                Commission
+                Time
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  {submission.selected_package.commission}%
+                  {submission.selected_package.time}
                 </div>
               </div>
             </div>
@@ -122,7 +122,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               </div>
               <div className="justify-start items-end gap-1 inline-flex">
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
-                  %{submission.selected_package.payment}
+                  ${submission.selected_package.payment}
                 </div>
               </div>
             </div>
@@ -136,6 +136,29 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
                 <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
                   ${submission.selected_package.buy_rate}
                 </div>
+              </div>
+            </div>
+            <div className="grow shrink basis-0 self-stretch flex-col justify-between items-start inline-flex">
+              <div className="text-black text-xs font-normal  font-montserrat leading-tight">
+                Net Funding
+              </div>
+              <div className="w-6 h-6 relative" />
+              <div className="justify-start items-end gap-1 inline-flex">
+                <div className="text-[#383a3d] text-xl font-semibold  font-montserrat">
+                  ${submission.selected_package.buy_rate}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="self-stretch justify-start items-start gap-6 inline-flex">
+          <div className="grow shrink basis-0 h-[43px] justify-start items-start gap-6 flex">
+            <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+              <div className="text-black text-xs font-normal  font-montserrat leading-tight">
+                Commision
+              </div>
+              <div className="w-[116px] text-[#383a3d] text-xl font-semibold  font-montserrat">
+                {submission.selected_package.commission}%
               </div>
             </div>
             <div className="grow shrink basis-0 self-stretch flex-col justify-between items-start inline-flex">
@@ -155,6 +178,7 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
               />
             </div>
           </div>
+          <div className="grow shrink basis-0 h-11 justify-start items-start gap-12 flex"></div>
         </div>
         <div className="self-stretch h-[200px] px-6 pt-6 pb-4 bg-[#f9fbfa] rounded-lg border border-[#e1e2e1] flex-col justify-start items-center gap-4 flex">
           <div className="self-stretch justify-start items-start gap-6 inline-flex">

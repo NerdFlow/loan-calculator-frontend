@@ -12,6 +12,7 @@ export interface Submission {
     time: string;
     commission: string;
     origination_fee: string;
+    net_funding_amount: string;
     factor: string;
     payment: string;
     buy_rate: string;

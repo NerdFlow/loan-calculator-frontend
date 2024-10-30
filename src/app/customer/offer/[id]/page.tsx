@@ -409,6 +409,10 @@ export default function Offer() {
               </div>
               <div className="border-white/25 border-t flex flex-col py-3 gap-2 ">
                 <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
+                  <p>Frequency</p>
+                  <p className="font-semibold">{frequencyUnit()}</p>
+                </div>
+                <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                   <p>Term</p>
                   <p className="font-semibold">
                     {timePeriod} {frequencyUnit()}

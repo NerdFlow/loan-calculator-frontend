@@ -83,10 +83,24 @@ export default function Submission() {
             </div>
           </td>
 
+          {/* Net Funding Amount */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              ${row.selected_package.net_funding_amount}
+            </div>
+          </td>
+
           {/* Origination Fee */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
               ${row.selected_package.origination_fee}
+            </div>
+          </td>
+
+          {/* Buy Rate */}
+          <td className="py-6 px-3">
+            <div className="text-neutral-700 px-3 font-medium font-raleway">
+              {row.selected_package.buy_rate}%
             </div>
           </td>
 
@@ -179,7 +193,13 @@ export default function Submission() {
                       Commission
                     </th>
                     <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                      Net Funding
+                    </th>
+                    <th className="font-semibold font-montserrat text-neutral-700 p-3">
                       Origination Fee
+                    </th>
+                    <th className="font-semibold font-montserrat text-neutral-700 p-3">
+                      Buy Rate
                     </th>
                     <th className="font-semibold font-montserrat text-neutral-700 p-3">
                       Factor
