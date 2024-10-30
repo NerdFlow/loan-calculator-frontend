@@ -36,6 +36,8 @@ const ShowSubmissionModal: React.FC<ShowSubmissionProps> = ({
           );
         }
         toast.success(response?.success);
+
+        onClose();
       });
   }
 
