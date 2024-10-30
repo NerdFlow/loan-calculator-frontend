@@ -394,10 +394,12 @@ export default function Offer() {
                 <p className="text-sm font-semibold ">Offer Summary</p>
                 <div className="bg-minor w-full rounded text-center p-4 flex flex-col gap-2">
                   <p className="font-semibold">Total Repayment</p>
-                  <p className="text-3xl font-bold font-inter">$250,000</p>
+                  <p className="text-3xl font-bold font-inter">
+                    ${selectedPackage && selectedPackage.net_funding_amount}
+                  </p>
                 </div>
               </div>
-              <div className="flex gap-2 flex-col ">
+              {/* <div className="flex gap-2 flex-col ">
                 <div className="font-inter flex justify-between">
                   <p>Factor</p>
                   <p>{selectedPackage && selectedPackage.factor}%</p>
@@ -406,8 +408,20 @@ export default function Offer() {
                   <p>Payment</p>
                   <p>${selectedPackage && selectedPackage.payment}</p>
                 </div>
-              </div>
-              <div className="border-white/25 border-t flex flex-col py-3 gap-2 ">
+              </div> */}
+              <div className="flex flex-col py-3 gap-2 ">
+                <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
+                  <p>Payment</p>
+                  <p className="font-semibold">
+                    ${selectedPackage && selectedPackage.payment}
+                  </p>
+                </div>
+                <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
+                  <p>Factor</p>
+                  <p className="font-semibold">
+                    {selectedPackage && selectedPackage.factor}%
+                  </p>
+                </div>
                 <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                   <p>Frequency</p>
                   <p className="font-semibold">{frequencyUnit()}</p>
