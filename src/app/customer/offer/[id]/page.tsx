@@ -13,6 +13,7 @@ import {
 import { RootState } from "@/lib/store";
 import SubmitOffer from "../components/SubmitOffer";
 import AlreadySubmitted from "../components/AlreadySubmitted";
+import { formattedNumber } from "@/app/utils/helpers";
 
 export interface IIisoPackage {
   id: number;
@@ -263,13 +264,13 @@ export default function Offer() {
                   <div className="">
                     <p>Loan Amount</p>
                     <p className="font-semibold text-xl text-secondary">
-                      ${loanAmount}
+                      ${loanAmount && formattedNumber(loanAmount)}
                     </p>
                   </div>
                   <div className="flex-grow flex justify-end items-center">
                     <div className="w-[470px] max-w-full relative">
                       <p className="absolute left-0 -bottom-[15px] text-sm">
-                        {loanAmounts[0]}
+                        ${loanAmounts[0] && formattedNumber(loanAmounts[0])}
                       </p>
                       <input
                         disabled={loanAmounts.length <= 1}
@@ -283,7 +284,9 @@ export default function Offer() {
                         onChange={handleLoanAmountChange}
                       />
                       <p className="absolute right-0 -bottom-[15px] text-sm">
-                        {loanAmounts[loanAmounts.length - 1]}
+                        $
+                        {loanAmounts[loanAmounts.length - 1] &&
+                          formattedNumber(loanAmounts[loanAmounts.length - 1])}
                       </p>
                     </div>
                   </div>
@@ -323,13 +326,15 @@ export default function Offer() {
                   <div className="">
                     <p>Origination Fee</p>
                     <p className="font-semibold text-xl text-secondary">
-                      ${originationFee}
+                      ${originationFee && formattedNumber(originationFee)}
                     </p>
                   </div>
                   <div className="flex-grow flex justify-end items-center">
                     <div className="w-[470px] max-w-full relative">
                       <p className="absolute left-0 -bottom-[15px] text-sm">
-                        {originationFeeses[0]}
+                        $
+                        {originationFeeses[0] &&
+                          formattedNumber(originationFeeses[0])}
                       </p>
                       <input
                         disabled={!(originationFeeses.length > 1)}
@@ -342,7 +347,11 @@ export default function Offer() {
                         onChange={handleOrignationFeeChange}
                       />
                       <p className="absolute right-0 -bottom-[15px] text-sm">
-                        {originationFeeses[originationFeeses.length - 1]}
+                        $
+                        {originationFeeses[originationFeeses.length - 1] &&
+                          formattedNumber(
+                            originationFeeses[originationFeeses.length - 1]
+                          )}
                       </p>
                     </div>
                   </div>
@@ -395,7 +404,9 @@ export default function Offer() {
                 <div className="bg-minor w-full rounded text-center p-4 flex flex-col gap-2">
                   <p className="font-semibold">Total Repayment</p>
                   <p className="text-3xl font-bold font-inter">
-                    ${selectedPackage && selectedPackage.net_funding_amount}
+                    $
+                    {selectedPackage &&
+                      formattedNumber(selectedPackage.net_funding_amount)}
                   </p>
                 </div>
               </div>
@@ -413,7 +424,9 @@ export default function Offer() {
                 <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                   <p>Payment</p>
                   <p className="font-semibold">
-                    ${selectedPackage && selectedPackage.payment}
+                    $
+                    {selectedPackage &&
+                      formattedNumber(selectedPackage.payment)}
                   </p>
                 </div>
                 <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
@@ -434,12 +447,16 @@ export default function Offer() {
                 </div>
                 <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                   <p>Origination Fee</p>
-                  <p className="font-semibold">${originationFee}</p>
+                  <p className="font-semibold">
+                    ${originationFee && formattedNumber(originationFee)}
+                  </p>
                 </div>
                 <div className="flex justify-between bg-minor/30 p-2 rounded-lg">
                   <p>Net Funding Amount</p>
                   <p className="font-semibold">
-                    ${selectedPackage?.net_funding_amount}
+                    $
+                    {selectedPackage?.net_funding_amount &&
+                      formattedNumber(selectedPackage?.net_funding_amount)}
                   </p>
                 </div>
               </div>

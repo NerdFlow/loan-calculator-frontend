@@ -11,6 +11,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelectPackageMutation } from "@/lib/slices/offer/offerApiSlice";
 import { toast } from "react-toastify";
+import { formattedNumber } from "@/app/utils/helpers";
 
 export default function SubmitOffer({
   handleBackToPackageSelection,
@@ -224,7 +225,9 @@ export default function SubmitOffer({
             <div className="">
               <p>Loan Amount</p>
               <p className="font-semibold text-xl text-secondary">
-                ${selectedPackage?.loan_amount}
+                $
+                {selectedPackage?.loan_amount &&
+                  formattedNumber(selectedPackage?.loan_amount)}
               </p>
             </div>
             <div className="flex-grow flex justify-end items-center w-[80%] max-w-[600px]">
@@ -326,7 +329,9 @@ export default function SubmitOffer({
               <div className="">
                 <p>Net Funding Amount</p>
                 <p className="font-semibold text-xl text-secondary">
-                  ${selectedPackage?.net_funding_amount}
+                  $
+                  {selectedPackage?.net_funding_amount &&
+                    formattedNumber(selectedPackage?.net_funding_amount)}
                 </p>
               </div>
               <div className="flex-grow flex justify-end items-center mb-4">
@@ -366,7 +371,9 @@ export default function SubmitOffer({
               <div className="">
                 <p>Origination Fee</p>
                 <p className="font-semibold text-xl text-secondary">
-                  ${selectedPackage?.origination_fee}
+                  $
+                  {selectedPackage?.origination_fee &&
+                    formattedNumber(selectedPackage?.origination_fee)}
                 </p>
               </div>
               <div className="flex-grow flex justify-end items-center mb-4">

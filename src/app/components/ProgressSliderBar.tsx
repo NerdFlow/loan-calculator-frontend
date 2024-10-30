@@ -1,4 +1,5 @@
 import React from "react";
+import { formattedNumber } from "../utils/helpers";
 
 const ProgressSliderBar = ({
   value,
@@ -31,7 +32,7 @@ const ProgressSliderBar = ({
     <div className="w-full relative">
       <p className="absolute left-0 -bottom-[15px] text-sm">
         {isAmount && "$"}
-        {min}
+        {isAmount ? formattedNumber(min) : min}
       </p>
       <div className="relative h-[6px] bg-[#EEEEEE] rounded-lg mb-5">
         {/* Fill based on value */}
@@ -44,7 +45,7 @@ const ProgressSliderBar = ({
       </div>
       <p className="absolute right-0 -bottom-[15px] text-sm">
         {isAmount && "$"}
-        {max}
+        {isAmount ? formattedNumber(max) : max}
       </p>
     </div>
   );
