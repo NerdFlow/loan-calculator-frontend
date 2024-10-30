@@ -1,10 +1,19 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 function AlreadySubmitted() {
   return (
     <div className="h-screen flex items-center justify-center flex-col gap-4">
-      <h3 className="font-bold text-xl">Link Expired </h3>
-      <p className="text-lg">You have already selected your package!</p>
+      <FontAwesomeIcon
+        icon={faCheckCircle}
+        className="text-green-500"
+        size="4x"
+      />
+      <p className="text-lg">
+        Thank you for selecting your Package. If you require a fresh link,
+        please contact us at CreativeCapitalSolutions
+      </p>
     </div>
   );
 }
