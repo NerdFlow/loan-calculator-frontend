@@ -14,6 +14,7 @@ import {
 } from "@/lib/slices/submissions/submissionApiSlice";
 import OverlayLoader from "@/app/components/Loaders/OverlayLoader";
 import { toast } from "react-toastify";
+import { formattedNumber } from "@/app/utils/helpers";
 
 export default function Submission() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -60,7 +61,7 @@ export default function Submission() {
           {/* Loan Amount */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
-              ${row.selected_package.loan_amount}
+              ${formattedNumber(row.selected_package.loan_amount)}
             </div>
           </td>
           {/* Frequency */}
@@ -86,14 +87,14 @@ export default function Submission() {
           {/* Net Funding Amount */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
-              ${row.selected_package.net_funding_amount}
+              ${formattedNumber(row.selected_package.net_funding_amount)}
             </div>
           </td>
 
           {/* Origination Fee */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
-              ${row.selected_package.origination_fee}
+              ${formattedNumber(row.selected_package.origination_fee)}
             </div>
           </td>
 
@@ -114,7 +115,7 @@ export default function Submission() {
           {/* Payment */}
           <td className="py-6 px-3">
             <div className="text-neutral-700 px-3 font-medium font-raleway">
-              ${row.selected_package.payment}
+              ${formattedNumber(row.selected_package.payment)}
             </div>
           </td>
 
