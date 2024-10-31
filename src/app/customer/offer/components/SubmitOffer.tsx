@@ -50,39 +50,51 @@ export default function SubmitOffer({
     if (!packages || packages.length === 0) return;
 
     // Find min and max loan amounts
-    const minLoan = packages.reduce((acc, v) =>
-      parseInt(v.loan_amount) < parseInt(acc.loan_amount) ? v : acc
+    const minLoan = packages.reduce(
+      (acc, v) =>
+        parseInt(v.loan_amount) < parseInt(acc.loan_amount) ? v : acc,
+      packages[0]
     ).loan_amount;
-    const maxLoan = packages.reduce((acc, v) =>
-      parseInt(v.loan_amount) > parseInt(acc.loan_amount) ? v : acc
+    const maxLoan = packages.reduce(
+      (acc, v) =>
+        parseInt(v.loan_amount) > parseInt(acc.loan_amount) ? v : acc,
+      packages[0]
     ).loan_amount;
 
     // Find min and max terms
-    const minTerm = packages.reduce((acc, v) =>
-      parseInt(v.time) < parseInt(acc.time) ? v : acc
+    const minTerm = packages.reduce(
+      (acc, v) => (parseInt(v.time) < parseInt(acc.time) ? v : acc),
+      packages[0]
     ).time;
-    const maxTerm = packages.reduce((acc, v) =>
-      parseInt(v.time) > parseInt(acc.time) ? v : acc
+    const maxTerm = packages.reduce(
+      (acc, v) => (parseInt(v.time) > parseInt(acc.time) ? v : acc),
+      packages[0]
     ).time;
 
     // Find min and max net funding amounts
-    const minFund = packages.reduce((acc, v) =>
-      parseInt(v.net_funding_amount) < parseInt(acc.net_funding_amount)
+    const minFund = packages.reduce((acc, v) => {
+      return parseInt(v.net_funding_amount) < parseInt(acc.net_funding_amount)
         ? v
-        : acc
-    ).net_funding_amount;
-    const maxFund = packages.reduce((acc, v) =>
-      parseInt(v.net_funding_amount) > parseInt(acc.net_funding_amount)
-        ? v
-        : acc
+        : acc;
+    }, packages[0]).net_funding_amount;
+    const maxFund = packages.reduce(
+      (acc, v) =>
+        parseInt(v.net_funding_amount) > parseInt(acc.net_funding_amount)
+          ? v
+          : acc,
+      packages[0]
     ).net_funding_amount;
 
     // Find min and max origination fees
-    const minOrigination = packages.reduce((acc, v) =>
-      parseInt(v.origination_fee) < parseInt(acc.origination_fee) ? v : acc
+    const minOrigination = packages.reduce(
+      (acc, v) =>
+        parseInt(v.origination_fee) < parseInt(acc.origination_fee) ? v : acc,
+      packages[0]
     ).origination_fee;
-    const maxOrigination = packages.reduce((acc, v) =>
-      parseInt(v.origination_fee) > parseInt(acc.origination_fee) ? v : acc
+    const maxOrigination = packages.reduce(
+      (acc, v) =>
+        parseInt(v.origination_fee) > parseInt(acc.origination_fee) ? v : acc,
+      packages[0]
     ).origination_fee;
 
     // Update the state with the computed values

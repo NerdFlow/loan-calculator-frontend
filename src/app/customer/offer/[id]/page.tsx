@@ -72,11 +72,10 @@ export default function Offer() {
 
   //maxLoanAmount
   useEffect(() => {
-    if (!packages || packages?.length <= 0) return;
+    if (!packages || packages.length <= 0) return;
     const reducedMaxLoanAmount = packages.reduce((acc, v) => {
-      if (acc > v) return acc;
-      else return v;
-    }).loan_amount;
+      return parseFloat(acc.loan_amount) > parseFloat(v.loan_amount) ? acc : v;
+    }, packages[0]).loan_amount;
     setMaxLoaAmount(reducedMaxLoanAmount);
   }, [packages]);
 
