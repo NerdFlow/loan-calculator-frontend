@@ -68,6 +68,17 @@ export default function Offer() {
   const [timePeriods, setTimePeriods] = useState<number[]>([]);
   const [originationFeeses, setOriginationFeeses] = useState<number[]>([]);
   const [selectedPackage, setSelectedPackage] = useState<IIisoPackage | null>();
+  const [maxLoanAmount, setMaxLoaAmount] = useState("0");
+
+  //maxLoanAmount
+  useEffect(() => {
+    if (!packages || packages?.length <= 0) return;
+    const reducedMaxLoanAmount = packages.reduce((acc, v) => {
+      if (acc > v) return acc;
+      else return v;
+    }).loan_amount;
+    setMaxLoaAmount(reducedMaxLoanAmount);
+  }, [packages]);
 
   // Initial Frequency
   useEffect(() => {
@@ -82,6 +93,7 @@ export default function Offer() {
           .sort((a, b) => a - b)
       )
     );
+
     setloanAmounts(filteredLoans);
   }, [frequency]);
 
@@ -211,7 +223,7 @@ export default function Offer() {
           </header>
 
           {/* displaying the offer banner */}
-          <OfferBanner />
+          <OfferBanner amount={maxLoanAmount ?? "0"} />
 
           {/* caluclator layout */}
           <div className="grid grid-cols-12 gap-4 mt-5">
@@ -278,7 +290,7 @@ export default function Offer() {
                         type="range"
                         step={1}
                         className="w-full mb-5"
-                        min={1}
+                        min={loanAmounts.length > 1 ? 1 : 0}
                         max={loanAmounts.length}
                         value={loanAmounts.indexOf(loanAmount ?? 0) + 1}
                         onChange={handleLoanAmountChange}
@@ -311,7 +323,7 @@ export default function Offer() {
                         type="range"
                         step={1}
                         className="w-full mb-5"
-                        min={1}
+                        min={timePeriods.length > 1 ? 1 : 0}
                         max={timePeriods.length}
                         onChange={handleTimePeriodChange}
                       />
@@ -337,12 +349,15 @@ export default function Offer() {
                           formattedNumber(originationFeeses[0])}
                       </p>
                       <input
+                        value={
+                          originationFeeses.indexOf(originationFee ?? 0) + 1
+                        }
                         disabled={!(originationFeeses.length > 1)}
-                        id="minmax-range"
+                        id="minmax-origination-range"
                         type="range"
                         step={1}
                         className="w-full mb-5"
-                        min={1}
+                        min={originationFeeses.length > 1 ? 1 : 0}
                         max={originationFeeses.length}
                         onChange={handleOrignationFeeChange}
                       />
